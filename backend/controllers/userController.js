@@ -14,7 +14,6 @@ exports.register = async (req,res) => {
                 success : false,
             });
         }
-
         //checking if password and confirm password equal ?
         if(password !== confirmPassword)
         {
@@ -23,10 +22,9 @@ exports.register = async (req,res) => {
                 message : "Password and Confirm Password are not equal !!",
             })
         }
-
         //We will check if the userName is already taken or not
         const user = await User.findOne({userName});
-
+        
         if(user)
         {
             return res.status(400).json({
@@ -34,14 +32,12 @@ exports.register = async (req,res) => {
                 message : "UserName already Taken ",
             })
         }
-
         //Encypting Password 
         const encryptedPassword = await bcrypt.hash(password,10);
 
         //Generating default profile photo 
         const maleProfilePhoto = `https://avatar.iran.liara.run/public/boy?username=${userName}`;
         const femaleProfilePhoto = `https://avatar.iran.liara.run/public/girl?username=${userName}`;
-
 
         //Saving in DB
         const newUser = await User.create({

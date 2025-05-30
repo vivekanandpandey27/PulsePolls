@@ -9,6 +9,6 @@ router.get("/allpost",isAuthenticated,showAllPolls);
 router.delete("/delete/:id",isAuthenticated,deletePoll);
 router.put("/vote/:id",isAuthenticated,votePolls);
 
-
+module.exports = router;
 
 //router.get("/getpost/:id")

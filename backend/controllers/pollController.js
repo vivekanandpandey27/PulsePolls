@@ -60,6 +60,7 @@ const votePolls = async(req,res)=>{
     try{
         const id = req.params.id;
         const option = req.body.option;
+        console.log(option)
 
         const poll = await pollModel.findByIdAndUpdate(id , {$inc : option ==='yes'?{yes : 1}:{no : 1}} ,{ new : true} );
        
