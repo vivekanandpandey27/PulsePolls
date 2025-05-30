@@ -20,7 +20,7 @@ exports.register = async (req,res) => {
         {
             return res.status(400).json({
                 success : false,
-                message : "Paaword and Confirm Password are not equal !!",
+                message : "Password and Confirm Password are not equal !!",
             })
         }
 
@@ -148,7 +148,7 @@ exports.login = async (req,res) => {
 
 exports.logout = async (req,res) => {
     try {
-        
+
         res.status(200).cookie("token","",{
             maxAge : 0,
             httpOnly : true
