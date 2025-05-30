@@ -74,4 +74,94 @@ exports.register = async (req,res) => {
              error: error.message,
             });
     }
-} 
+};
+
+
+exports.login = async (req,res) => {
+    try{
+        //extracting data from req
+        const {userName, password} = req.body;
+    
+    
+        //Checking if all fields are available or not
+        if(!userName || !password)
+        {
+            return res.status(400).json({
+                success : false,
+                message : "Enter All Fields",
+            });
+        }
+    
+        const user = await User.findOne({userName});
+    
+        //Validating userName
+        if(!user)
+        {
+            return res.status(400).json({
+                success : false,
+                message : "Invalid UserName",
+            });
+        }
+    
+        //Checking Password
+        const isMatch = await bcrypt.compare(password,user.password);
+    
+        if (!isMatch) 
+        {
+          return res.status(400).json({
+            success: false,
+            message: "Wrong password",
+          });
+        }
+    
+        //creating jwt token
+        const payload = {userID : user._id};
+        const token = jwt.sign(payload,process.env.secret_code,{
+            expiresIn : "1d",
+        });
+    
+        //Send Token as cookie
+        return res
+        .status(200)
+        .cookie("token",token,{
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: true
+        })
+        .json({
+             userName : user.userName,
+             fullName : user.fullName,
+             id : user._id,
+             profilePhoto : user.profilePhoto,
+             gender : user.gender,
+        });
+
+
+    } catch(error) {
+        res.status(500).json({
+        success: false,
+        message: "An error occurred during login.",
+        error: error.message,
+        });
+    }
+    };
+
+
+exports.logout = async (req,res) => {
+    try {
+        
+        res.status(200).cookie("token","",{
+            maxAge : 0,
+            httpOnly : true
+        }).json({
+            message : "LogOut Successfully .",
+        });
+
+    } catch {
+        req.res(400).json({
+            success : false,
+            message : "Error While Logout !!",
+        })
+    }
+}    
+
+
