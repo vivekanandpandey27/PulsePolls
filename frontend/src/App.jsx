@@ -5,6 +5,8 @@ import LoginPage from './components/LoginPage';
 import Signup from './components/SignUp';
 import { PollBox } from './components/PollBox';
 import { HomePage } from './components/HomePage';
+import { CreatePoll } from './components/CreatePoll';
+
 function App() {
 return (<div>
     <Routes>
@@ -12,6 +14,7 @@ return (<div>
         <Route path = "/Poll" element = {<PollBox/>}/>
         <Route path ="/login" element = {<LoginPage/>}/>
         <Route path ="/signup" element = {<Signup/>}/>
+        <Route path = "/CreatePoll" element = {<CreatePoll/>} /> 
         
     </Routes>
 

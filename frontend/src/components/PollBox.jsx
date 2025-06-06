@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Poll } from './Polls';
 import axios from 'axios';
-
 const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+
+
 
 async function fetchPollData(setData) {
   try {
