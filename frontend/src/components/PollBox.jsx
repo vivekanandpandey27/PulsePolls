@@ -23,15 +23,17 @@ async function fetchPollData(setData) {
 
 export const PollBox = () => {
   const [data, changedata] = useState([]);
+  const [reload,setreload] = useState(0);
 
+ 
   useEffect(() => {
     fetchPollData(changedata); 
-  }, []);
+  }, [reload]);
 
   return (
-    <div className='min-h-screen grid grid-cols-4 p-10 gap-3 bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#16213e]'>
+    <div className='min-h-screen mx-auto grid grid-cols-2 p-40 gap-6 bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#16213e]'>
       {data && data.map((polldata, index) => (
-        <Poll key={index} data={polldata} />
+        <Poll key={index} data={polldata} refetch = {setreload}/>
       ))}
     </div>
   );
