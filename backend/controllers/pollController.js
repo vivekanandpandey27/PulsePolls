@@ -4,12 +4,13 @@ const pollModel = require('../models/pollModel');
 //1----CreatePoll
 const createPoll = async (req,res)=>{
     try{
-        const{title, tags, imageUrl , expiresAt} = req.body;
+        const{title, tags, imageUrl ,options, expiresAt} = req.body;
 
         const poll = new pollModel(
             {title,
             tags,
             imageUrl,
+            options,
             expiresAt}
         );
 

@@ -30,8 +30,8 @@ export const PollBox = () => {
 
   return (
     <div className='min-h-screen grid grid-cols-4 p-10 gap-3 bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#16213e]'>
-      {data && data.map((option, index) => (
-        <Poll key={index} data={option} />
+      {data && data.map((polldata, index) => (
+        <Poll key={index} data={polldata} />
       ))}
     </div>
   );
