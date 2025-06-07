@@ -18,9 +18,9 @@ exports.isAuthenticated = async(req,res,next)=>  {
                 message:"invalid user"
             })
          }
-
-         req.ID=decode.userId;
-         console.log(decode);
+         
+         req.ID=decode.userID;
+         //console.log("DECODED USER ",decode);
         next();
     }
     catch(err){
