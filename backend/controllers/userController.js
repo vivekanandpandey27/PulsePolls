@@ -25,6 +25,7 @@ exports.register = async (req,res) => {
         //We will check if the userName is already taken or not
         const user = await User.findOne({userName});
         
+        
         if(user)
         {
             return res.status(400).json({
@@ -159,5 +160,64 @@ exports.logout = async (req,res) => {
         })
     }
 }    
+// exports.profile = async(req , res ) => {
+
+
+
+// };
+// exports.editprofile = async (req, res) => {
+//   try {
+//     const { oldUsername, fullName, newUserName, gender } = req.body;
+
+//     // 🔐 Check empty fields
+//     if (!fullName || !oldUsername || !newUserName || !gender) {
+//       return res.status(400).json({
+//         message: "All fields are required",
+//         success: false,
+//       });
+//     }
+
+//     // 🔍 Check if newUserName already exists and is not same as oldUsername
+//     if (newUserName !== oldUsername) {
+//       const existingUser = await User.findOne({ userName: newUserName });
+//       if (existingUser) {
+//         return res.status(400).json({
+//           success: false,
+//           message: "Username already exists, choose a unique username",
+//         });
+//       }
+//     }
+
+//     // ✅ Update the existing user
+//     const updatedUser = await User.findOneAndUpdate(
+//       { userName: oldUsername },
+//       {
+//         fullName: fullName,
+//         userName: newUserName,
+//         gender: gender,
+//       },
+//       { new: true }
+//     );
+
+//     if (!updatedUser) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
+
+//     res.status(200).json({
+//       message: "Profile updated successfully",
+//       success: true,
+//       updatedUser,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       message: "Something went wrong",
+//       success: false,
+//     });
+//   }
+// };
 
 

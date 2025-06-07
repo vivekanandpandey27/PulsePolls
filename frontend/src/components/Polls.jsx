@@ -5,7 +5,7 @@ export const Poll = ({data}) => {
   const  choices = ["MI","RCB"]
   
   return (
-    <div className=' bg-slate-400 border border-neutral-900 rounded-2xl w-80 p-2 backdrop-blur-sm shadow-lg transition-all  hover:shadow-slate-500 max-h-60'>
+    <div className=' bg-purple-700 border border-neutral-900 rounded-2xl w-80 p-2 backdrop-blur-sm shadow-lg transition-all  hover:shadow-slate-500 max-h-60'>
                 {/* LOGO AND TITLE */}
                 <div className='flex space-x-3'>
                      <div>
