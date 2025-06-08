@@ -32,6 +32,10 @@ const pollSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User' 
         }],
+        creator : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
         expiresAt : {
             type : Date
         },
@@ -45,4 +49,4 @@ const pollSchema = new mongoose.Schema(
     {timestamps : true});
 
 
-    module.exports = mongoose.model('Poll', pollSchema);
+module.exports = mongoose.model('Poll', pollSchema);

@@ -14,11 +14,11 @@ export const Header_box = () => {
     const myProfile = () => navigate('/profile');
     const goToHome = () => navigate('/');
     const goToTrending = () => navigate('/trending');
-    const goToMyPolls = () => navigate('/my-polls');
+    const goToMyPolls = () => navigate('/myPolls');
     const goToCompleted = () => navigate('/completed');
 
   return (
-    <header className="sticky top-0 z-20 bg-gray-900/80 backdrop-blur-lg border-b border-purple-900/30">
+    <header className="sticky top-0 z-20 bg-purple-950 backdrop-blur-lg border-b border-purple-900/30">
                 <div className="container mx-auto px-4 py-3 flex justify-between items-center">
                     {/* Logo with animation */}
                     <motion.div 
@@ -42,6 +42,11 @@ export const Header_box = () => {
                                 text="Home"
                             />
                             <NavButton 
+                                onClick={goToCompleted} 
+                                icon={<FiCheckCircle className="mr-2" />} 
+                                text="Completed"
+                            />
+                            <NavButton 
                                 onClick={goToTrending} 
                                 icon={<FiTrendingUp className="mr-2" />} 
                                 text="Trending"
@@ -51,11 +56,7 @@ export const Header_box = () => {
                                 icon={<FiList className="mr-2" />} 
                                 text="My Polls"
                             />
-                            <NavButton 
-                                onClick={goToCompleted} 
-                                icon={<FiCheckCircle className="mr-2" />} 
-                                text="Completed"
-                            />
+                           
                         </nav>
                     </motion.div>
                     

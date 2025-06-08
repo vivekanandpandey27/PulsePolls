@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-
-
+import { useDispatch } from 'react-redux';
+import { setAuthUser } from '../redux/userSlice';
 
 
 const LoginPage = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [FormData, SetformData] = useState({ userName: "", password: "" });
   const [PasswordVisibility, setPasswordVisibility] = useState(false);
@@ -41,6 +42,8 @@ const LoginPage = () => {
       );
 
       console.log("Login Response:", res.data);
+      dispatch(setAuthUser(res.data));
+      navigate('/');
       //localStorage.setItem("authUser", JSON.stringify(res.data));
       toast.success(res.data.message);
       //navigate('/');

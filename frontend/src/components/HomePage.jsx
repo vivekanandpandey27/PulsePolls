@@ -9,7 +9,7 @@ const HomePage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white">
             {/* Enhanced Header with Glass Morphism */}
-            <Header_box/>
+            {/* <Header_box/> */}
             <br></br>
             <Categories/>
             <PollBox/>

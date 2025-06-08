@@ -4,6 +4,8 @@ const User  = require('../models/userModel')
 //1----CreatePoll
 const createPoll = async (req,res)=>{
     try{
+        const id = req.ID;
+        //console.log(id);
         const{title, tags, imageUrl ,options, expiresAt} = req.body;
 
         const poll = new pollModel(
@@ -12,6 +14,7 @@ const createPoll = async (req,res)=>{
             imageUrl,
             options,
             participants : [],
+            creator : id,
             expiresAt}
         );
 

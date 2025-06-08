@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Poll } from './Polls';
 import axios from 'axios';
-const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+import { useSelector , useDispatch } from 'react-redux';
 
+
+const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
 
 
 async function fetchPollData(setData) {
@@ -21,20 +23,23 @@ async function fetchPollData(setData) {
   }
 }
 
-export const PollBox = () => {
+export const MyPolls = () => {
   const [data, changedata] = useState([]);
-  const [reload,setreload] = useState(0);
 
- 
+  const authUser = useSelector((state) => state.user.authUser);
+  //const authUser = useSelector((state) => state.user.authUser);
+  console.log(authUser.id)
+
   useEffect(() => {
     fetchPollData(changedata); 
-  },[reload]);
+  },[]);
 
   return (
     <div className='min-h-screen grid grid-cols-4 p-10 gap-3 '>
-      {data && data.map((option, index) => (
-        <Poll key={index} data={option} refetch = {setreload}/>
-      ))}
+      {data && data.filter((option) => option.creator === authUser?.id).map((option, index) => (
+      <Poll key={index} data={option} />
+    ))}
+
     </div>
   );
 };

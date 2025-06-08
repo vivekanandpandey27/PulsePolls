@@ -23,7 +23,7 @@ export const Poll = ({ data,refetch }) => {
                 withCredentials: true,
               }
             );
-
+       
        refetch(state => ((state +1) % 2));     
     } catch(error) {
       console.log(error);
@@ -50,11 +50,11 @@ export const Poll = ({ data,refetch }) => {
       {/* OPTIONS */}
       <div className='space-y-2'>
         {choices.map((option, index) => (
-          <div key={index} className='bg-neutral-500 border border-stone-500 rounded-lg px-3 py-2 hover:bg-neutral-600 transition-colors'>
+          <div key={index} className='bg-slate-50 border border-stone-500 rounded-lg px-3 py-2 hover:bg-neutral-600 transition-colors'>
 
             {/* INDIVIDUAL OPTIONS  */}
             <div className='flex justify-between items-center' onClick= {()=> {ClickHandler(data._id,index)}}>
-              <span className='truncate pr-2'>{option.text}</span>
+              <span className='truncate pr-2 text-black font-bold'>{option.text}</span>
               <span className='font-bold bg-neutral-700 text-white rounded-full px-2 py-1 text-xs min-w-[24px] text-center'>
                 {option.votes}
               </span>
