@@ -3,25 +3,37 @@ import { useNavigate } from 'react-router-dom';
 import { FiUser, FiHome, FiTrendingUp, FiList, FiCheckCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { Header_box } from './Header_box';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedCtegory } from '../redux/PollSlice';
 
 // Categories data with icons
     const categories = [
-        { name: 'Cricket', icon: '🏏' },
-        { name: 'Football', icon: '⚽' },
-        { name: 'Politics', icon: '🏛️' },
-        { name: 'News', icon: '📰' },
-        { name: 'Technology', icon: '💻' },
-        { name: 'Science', icon: '🔬' },
-        { name: 'Entertainment', icon: '🎬' },
-        { name: 'Education', icon: '📚' },
-        { name: 'Space', icon: '🚀' },
-        { name: 'Gaming', icon: '🎮' },
+        {name: 'all', icon: '🗽'},
+        { name: 'cricket', icon: '🏏' },
+        { name: 'football', icon: '⚽' },
+        { name: 'politics', icon: '🏛️' },
+        { name: 'news', icon: '📰' },
+        { name: 'technology', icon: '💻' },
+        { name: 'science', icon: '🔬' },
+        { name: 'entertainment', icon: '🎬' },
+        { name: 'education', icon: '📚' },
+        { name: 'space', icon: '🚀' },
+        { name: 'gaming', icon: '🎮' },
     ];
 
     
 
 export const Categories = () => {
   const [activeCategory, setActiveCategory] = useState(null);  
+  const dispatch = useDispatch();
+
+  async function setCategory(NewCategory) 
+  {
+        console.log(NewCategory)
+        setActiveCategory(NewCategory);
+        console.log("ahhah",NewCategory)
+        dispatch(setSelectedCtegory(NewCategory));
+  } 
 
   return (
     <div className='p-3'>
@@ -41,7 +53,7 @@ export const Categories = () => {
                                 key={index}
                                 whileHover={{ y: -5, scale: 1.03 }}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => setActiveCategory(category.name)}
+                                onClick={() => setCategory(category.name)}
                                 className={`p-4 rounded-xl transition-all flex flex-col items-center 
                                     ${activeCategory === category.name 
                                         ? 'bg-purple-600 shadow-lg shadow-purple-500/20' 

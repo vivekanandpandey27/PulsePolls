@@ -6,7 +6,7 @@ import Signup from './components/SignUp';
 import HomePage from './components/HomePage';
 import Myprofile from './components/MyProfile';
 import Editprofile from  './components/editProfile'
-import { CreatePoll } from './components/CreatePoll';
+import CreatePoll from './components/CreatePoll';
 import { MyPolls } from './components/myPolls';
 import { Header_box } from './components/Header_box';
 import { useSelector,useDispatch } from 'react-redux';

@@ -2,21 +2,30 @@ import React from 'react'
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FiUser, FiHome, FiTrendingUp, FiList, FiCheckCircle } from 'react-icons/fi';
+import { IoIosCreate } from "react-icons/io";
 import  { useState } from 'react';
 import NavButton from './NavButton';
+import { useSelector } from 'react-redux';
+import { IoMdLogIn } from "react-icons/io";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
+
 
 export const Header_box = () => {
 
 
     const navigate = useNavigate();
     const [activeCategory, setActiveCategory] = useState(null);
-  // Navigation functions
+    // Navigation functions
     const myProfile = () => navigate('/profile');
     const goToHome = () => navigate('/');
     const goToTrending = () => navigate('/trending');
     const goToMyPolls = () => navigate('/myPolls');
     const goToCompleted = () => navigate('/completed');
-
+    const gotoCreatePoll = () => navigate('/CreatePoll');
+    const gotoLogin = () => navigate("/login")
+    const gotoSignUP = () => navigate('/signup')
+    const isAuth = useSelector((state) => state.user.authUser);
+    //console.log("auth",isAuth);
   return (
     <header className="sticky top-0 z-20 bg-purple-950 backdrop-blur-lg border-b border-purple-900/30">
                 <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -41,27 +50,41 @@ export const Header_box = () => {
                                 icon={<FiHome className="mr-2" />} 
                                 text="Home"
                             />
-                            <NavButton 
+                            {
+                                !isAuth && <NavButton 
+                                onClick={gotoSignUP} 
+                                icon={<MdOutlineCreateNewFolder className="mr-2" />} 
+                                text="Create Account"
+                            />}
+                            
+                            {isAuth && <NavButton 
                                 onClick={goToCompleted} 
                                 icon={<FiCheckCircle className="mr-2" />} 
                                 text="Completed"
-                            />
-                            <NavButton 
-                                onClick={goToTrending} 
-                                icon={<FiTrendingUp className="mr-2" />} 
-                                text="Trending"
-                            />
-                            <NavButton 
+                            />}
+
+                            {isAuth && <NavButton 
+                                onClick={gotoCreatePoll} 
+                                icon={<IoIosCreate className="mr-2" />} 
+                                text="Create Poll"
+                            />}
+
+                            {isAuth && (<NavButton 
                                 onClick={goToMyPolls} 
                                 icon={<FiList className="mr-2" />} 
                                 text="My Polls"
-                            />
-                           
+                            />)}
+                            
+
                         </nav>
                     </motion.div>
                     
                     {/* Profile Icon with animation */}
-                    <motion.button 
+                    {(isAuth == null) ? (<NavButton 
+                                onClick={gotoLogin} 
+                                icon={<IoMdLogIn className="mr-2" />} 
+                                text="Login"
+                            />) : (<motion.button 
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={myProfile}
@@ -69,7 +92,8 @@ export const Header_box = () => {
                         aria-label="Profile"
                     >
                         <FiUser className="text-xl" />
-                    </motion.button>
+                    </motion.button>)}
+                    
                 </div>
             </header>
   )

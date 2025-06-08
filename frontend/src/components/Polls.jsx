@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 
+
+
 const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
 
 
@@ -36,6 +38,7 @@ export const Poll = ({ data,refetch }) => {
   const choices = data.options;
   const imageUrl = data.imageUrl
   
+
   return (
     <div className=' bg-purple-700 border border-neutral-900 rounded-2xl w-80 p-2 backdrop-blur-sm shadow-lg transition-all  hover:shadow-slate-500 max-h-60'>
                 {/* LOGO AND TITLE */}
