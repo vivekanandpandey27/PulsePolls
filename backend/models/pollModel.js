@@ -14,15 +14,28 @@ const pollSchema = new mongoose.Schema(
             type : String,
             required : true,
         },
-        yes : {
-            type : Number,
-            default: 0,
+        options: [{
+            text: {
+              type: String,
+              required: true
+            },
+            votes: {
+              type: Number,
+              default: 0
+            },
+            voters: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User' 
+            }]
+        }],
+        participants: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User' 
+        }],
+        creator : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
         },
-        no : {
-            type : Number,
-            default: 0,
-        },
-       
         expiresAt : {
             type : Date
         },
@@ -36,4 +49,4 @@ const pollSchema = new mongoose.Schema(
     {timestamps : true});
 
 
-    module.exports = mongoose.model('Poll', pollSchema);
+module.exports = mongoose.model('Poll', pollSchema);

@@ -25,6 +25,7 @@ exports.register = async (req,res) => {
         //We will check if the userName is already taken or not
         const user = await User.findOne({userName});
         
+        
         if(user)
         {
             return res.status(400).json({
@@ -158,6 +159,15 @@ exports.logout = async (req,res) => {
             message : "Error While Logout !!",
         })
     }
-}    
+}  
+
+exports.profile = async(req , res ) => {
+    try{    
+        const user_id = req.ID;
+        const user = User.findById(user_id);
+    } catch {
+        
+    }
+}
 
 
