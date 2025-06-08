@@ -154,7 +154,7 @@ exports.logout = async (req,res) => {
         });
 
     } catch {
-        req.res(400).json({
+        res.status(400).json({
             success : false,
             message : "Error While Logout !!",
         })
@@ -164,9 +164,15 @@ exports.logout = async (req,res) => {
 exports.profile = async(req , res ) => {
     try{    
         const user_id = req.ID;
-        const user = User.findById(user_id);
+        const user = await User.findById(user_id);
+        user.password = null;
+        return res.status(200).json(user);
+
     } catch {
-        
+         res.status(400).json({
+            success : false,
+            message : "Error While Fetching Profile Data !!",
+        })
     }
 }
 

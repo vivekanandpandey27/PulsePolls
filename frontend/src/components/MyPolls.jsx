@@ -35,7 +35,7 @@ export const MyPolls = () => {
   },[]);
 
   return (
-    <div className='min-h-screen grid grid-cols-4 p-10 gap-3 '>
+    <div className='min-h-screen grid grid-cols-4 p-10 gap-3 bg-purple-900 text-white'>
       {data && data.filter((option) => option.creator === authUser?.id).map((option, index) => (
       <Poll key={index} data={option} />
     ))}
