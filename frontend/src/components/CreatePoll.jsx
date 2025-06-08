@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
-export const CreatePoll = () => {
+ const CreatePoll = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ 
@@ -132,22 +132,7 @@ export const CreatePoll = () => {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="tags" className="block text-sm font-medium text-[#e0e0ff]">
-              Tags
-            </label>
-            <div className="relative">
-              <input
-                id="tags"
-                name="tags"
-                type="text"
-                onChange={changeHandler}
-                value={formData.tags}
-                placeholder="Enter tags (comma separated)"
-                className="w-full px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
-              />
-            </div>
-          </div>
+          
 
           <div className="space-y-2">
             <label htmlFor="imageUrl" className="block text-sm font-medium text-[#e0e0ff]">
@@ -191,6 +176,8 @@ export const CreatePoll = () => {
                     </svg>
                   </button>
                 </div>
+
+                
               ))}
               <button
                 type="button"
@@ -204,6 +191,33 @@ export const CreatePoll = () => {
               </button>
             </div>
           </div>
+{/* <TAGS></TAGS> */}
+          <div className="space-y-2">
+  <label className="block text-sm font-medium text-[#e0e0ff]">
+    Tags
+  </label>
+  <div className="flex flex-wrap gap-2">
+    {['Technology', 'Politics', 'Cricket','FootBall' ,'News','Science','Space', 'Entertainment', 'Education' , 'Space','Gaming'].map((tag) => (
+      <button
+        key={tag}
+        type="button"
+        onClick={() => {
+          setFormData(prev => ({
+            ...prev,
+            tags: tag.toLowerCase(), 
+          }));
+        }}
+        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          formData.tags === tag.toLowerCase() 
+            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30' 
+            : 'bg-[#1e1b4b20] text-[#e0e0ff] hover:bg-[#2e2b5b50] border border-[#3b3b6d]'
+        }`}
+      >
+        {tag}
+      </button>
+    ))}
+  </div>
+</div>
 
           <button
             type="submit"
@@ -217,3 +231,5 @@ export const CreatePoll = () => {
     </div>
   );
 };
+
+export default  CreatePoll;

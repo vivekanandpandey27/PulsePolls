@@ -34,13 +34,14 @@ export const Poll = ({ data,refetch }) => {
 
   const title = data.title;
   const choices = data.options;
+  const imageUrl = data.imageUrl
   
   return (
     <div className=' bg-purple-700 border border-neutral-900 rounded-2xl w-80 p-2 backdrop-blur-sm shadow-lg transition-all  hover:shadow-slate-500 max-h-60'>
                 {/* LOGO AND TITLE */}
                 <div className='flex space-x-3'>
                      <div>
-                         <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEzXk-Es5uSaQxsJbB5PnWfS_3mGLJLpHO-g&s" className='h-20 rounded-xl'></img>
+                         <img src = {imageUrl} className='h-20 rounded-xl'></img>
                      </div>
                      <div className='font-bold from-neutral-900'>
                           <div>{title}</div>

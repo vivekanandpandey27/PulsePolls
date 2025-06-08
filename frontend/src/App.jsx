@@ -6,6 +6,7 @@ import Signup from './components/SignUp';
 import HomePage from './components/HomePage';
 import Myprofile from './components/MyProfile';
 import Editprofile from  './components/editProfile'
+import CreatPoll from './components/CreatePoll'
 
 
 // import goToProfile from './components/goToProfile';
@@ -22,7 +23,7 @@ return (<div>
         <Route path ="/signup" element = {<Signup/>}/>
         <Route path = "/profile" element = {<Myprofile/>}/>
         <Route path ="/editprofile"   element  = {<Editprofile/>}/>
-        
+        <Route path ="/creatpoll" element ={<CreatPoll/>}/>
 
 
 
