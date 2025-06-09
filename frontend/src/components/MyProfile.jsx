@@ -85,8 +85,8 @@ const myProfile = () => {
         
         {/* User Info Section */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-1">{user.nameName}</h1>
-          <p className="text-blue-300 mb-2">{user.userName}</p>
+          <h1 className="text-2xl font-bold text-white mb-1 ">{user.nameName}</h1>
+          <p className="text-blue-300 mb-2 ">{user.userName}</p>
           <p className="text-purple-300">{user.gender}</p>
         </div>
         
