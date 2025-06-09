@@ -10,8 +10,24 @@ import { toast } from 'react-hot-toast';
     title: "", 
     tags: "", 
     imageUrl: "",
-    options: [{ text: "", votes: 0 }] 
+    options: [{ text: "", votes: 0 }],
+    expiresAt: ""
   });
+
+
+  const expiryOptions = [
+  { label: '1 min', value: 1 * 60 * 1000 },
+  { label: '10 min', value: 10 * 60 * 1000 },
+  { label: '1 hour', value: 1 * 60 * 60 * 1000 },
+  { label: '5 hours', value: 5 * 60 * 60 * 1000 },
+  { label: '10 hours', value: 10 * 60 * 60 * 1000 },
+  { label: '1 day', value: 1 * 24 * 60 * 60 * 1000 },
+  { label: '3 days', value: 3 * 24 * 60 * 60 * 1000 },
+  { label: '1 week', value: 7 * 24 * 60 * 60 * 1000 },
+  { label: '1 month', value: 30 * 24 * 60 * 60 * 1000 },   
+  { label: '6 months', value: 6 * 30 * 24 * 60 * 60 * 1000 } 
+];
+
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -214,6 +230,33 @@ import { toast } from 'react-hot-toast';
           ))}
         </div>
       </div>
+
+      <div className="space-y-2">
+  <label className="block text-sm font-medium text-[#e0e0ff]">
+    Expiry Time
+  </label>
+  <div className="flex flex-wrap gap-2">
+    {expiryOptions.map((option) => (
+      <button
+        key={option.value}
+        type="button"
+        onClick={() => {
+          setFormData(prev => ({
+            ...prev,
+            expiresAt : Date.now() + option.value, 
+          }));
+        }}
+        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          formData.expiresAt === option.value 
+            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30' 
+            : 'bg-[#1e1b4b20] text-[#e0e0ff] hover:bg-[#2e2b5b50] border border-[#3b3b6d]'
+        }`}
+      >
+        {option.label}
+      </button>
+    ))}
+  </div>
+</div>
 
       <button
         type="submit"

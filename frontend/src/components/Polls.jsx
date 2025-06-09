@@ -42,6 +42,9 @@ export const Poll = ({ data, refetch }) => {
         <div className='font-bold text-white flex-1 min-w-0'>
           <div className='text-sm sm:text-base line-clamp-2'>{title}</div>
         </div>
+         {/* <div className='w-4 h-4 rounded-full scale-150 font-extrabold text-green-500 text-3xl '>
+           .
+         </div> */}
       </div>
 
       {/* OPTIONS */}

@@ -29,6 +29,21 @@ export const PollBox = () => {
   const currentCategory = useSelector((state)=> state.poll.selectedCategory);
   
   const filteredData = currentCategory === "all" ? data : data.filter(option => option.tags === currentCategory);
+  console.log(filteredData);
+
+  const final_filtered_Data = filteredData?.filter(option => {
+  return new Date(option.expiresAt).getTime() > Date.now();
+});
+console.log("godna : ",final_filtered_Data);
+
+//   console.log("godna : ",filteredData.map(option => ({
+//   id: option._id,
+//   expiresAt: option.expiresAt
+// })));
+
+
+  // console.log(final_filtered_Data);
+
   // console.log(currentCategory);
   // console.log("FD : ",filteredData);
   //console.log("cur : ", currentCategory);
@@ -44,7 +59,7 @@ export const PollBox = () => {
 
     <div className='min-h-screen p-4 sm:p-6 lg:p-8'>
   <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6'>
-    {filteredData && filteredData.map((option, index) => (
+    {final_filtered_Data && final_filtered_Data.map((option, index) => (
       <Poll key={index} data={option} refetch={setreload} />
     ))}
   </div>
