@@ -172,9 +172,10 @@ exports.Editprofile = async (req, res) => {
     const similar_username = await User.findOne({userName : Username});
 
     console.log(user_id);
-    console.log("Simialr data : ",similar_username);    
+    console.log("Simialr data : ",similar_username);   
+
     //console.log(similar_username._id.toString());
-    if(user_id !== similar_username._id.toString())
+    if(similar_username !== null && user_id !== similar_username?._id.toString())
     {   
             console.log("unMatched");
             return res.status(400).json({
