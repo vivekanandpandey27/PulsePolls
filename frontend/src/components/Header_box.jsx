@@ -17,9 +17,8 @@ export const Header_box = () => {
     // Navigation functions
     const myProfile = () => navigate('/profile');
     const goToHome = () => navigate('/');
-    const goToTrending = () => navigate('/trending');
     const goToMyPolls = () => navigate('/myPolls');
-    const goToCompleted = () => navigate('/completed');
+    const goToCompleted = () => navigate('/Completed_Poll');
     const gotoCreatePoll = () => navigate('/CreatePoll');
     const gotoLogin = () => navigate("/login");
     const gotoSignUP = () => navigate('/signup');
@@ -93,9 +92,9 @@ export const Header_box = () => {
                 </nav>
                 
                 {/* Profile/Auth buttons */}
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 cursor-pointer">
                     {isAuth == null ? (
-                        <div className="hidden sm:block">
+                        <div className="hidden sm:block ">
                             <NavButton 
                                 onClick={gotoLogin} 
                                 icon={<IoMdLogIn className="mr-2" />} 
@@ -103,15 +102,8 @@ export const Header_box = () => {
                             />
                         </div>
                     ) : (
-                        <motion.button 
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={myProfile}
-                            className="p-2 rounded-full bg-purple-900/50 hover:bg-purple-800 transition-all border border-purple-700/30"
-                            aria-label="Profile"
-                        >
-                            <FiUser className="text-xl" />
-                        </motion.button>
+                        <img src = {isAuth.profilePhoto} onClick={myProfile} className='w-11 h-11 rounded-full border border-green-400 border-2'/>
+                       
                     )}
                 </div>
             </div>
