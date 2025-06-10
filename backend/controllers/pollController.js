@@ -33,7 +33,7 @@ const createPoll = async (req,res)=>{
 //2-----Deletepoll
 const deletePoll = async (req,res)=>{
     try{
-        const id = req.params.id;
+        const id = req.body.id;
         const poll = await pollModel.findByIdAndDelete(id);
         
         res.json({success : true,message : "Deleted Successfully"});

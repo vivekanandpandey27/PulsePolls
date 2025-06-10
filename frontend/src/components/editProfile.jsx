@@ -1,32 +1,67 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAuthUser } from '../redux/userSlice';
+import toast from 'react-hot-toast';
+
+const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+
 
 const editProfile = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const User = useSelector((state) => state.user.authUser);
   
-  // Static data for UI demonstration
   const [formData, setFormData] = useState({
-    oldUsername: "SamMish_45",
-    fullName: "Samar Mishra",
-    newUserName: "Viv_33",
-    gender: "Male"
+    Username: User.userName,
+    fullName: User.fullName,
+    imageUrl : User.profilePhoto,
+    gender: User.gender
   });
 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+    console.log(formData);
+  };
+  
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await axios.post(
+      `${REACT_BASE_URL}/api/v1/user/Editprofile`,
+      formData,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+      );
+
+      const newAuth =  {
+        userName : formData.Username,
+        fullName : formData.fullName,
+        id : User.id,
+        profilePhoto : formData.imageUrl,
+        gender : formData.gender
+      }
+      console.log(newAuth);
+
+      dispatch(setAuthUser(newAuth));
+      toast.success("Profile Updated Successfully !");
+      console.log("Profile updated:", res.data);
+      
+     } catch (error) {
+       console.log("Error sending new profile data:", error);
+     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert('Profile changes would be saved here (disabled for UI demo)');
-    // In real implementation, this would call your backend API
-    // navigate('/profile');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-blue-900 p-4 text-white">
@@ -48,7 +83,7 @@ const editProfile = () => {
         <div className="flex justify-center mb-6">
           <div className="w-24 h-24 rounded-full bg-purple-700 flex items-center justify-center overflow-hidden">
             <img 
-              src="https://lh3.googleusercontent.com/a/ACg8ocL9zn6Yzu4z3hdDx_nZaUg54vWVu4S0fUm-h_dIHPTCst1FV30HEA=s360-c-no" 
+              src={User.profilePhoto} 
               alt="Profile" 
               className="w-full h-full object-cover"
             />
@@ -74,8 +109,20 @@ const editProfile = () => {
             <label className="block text-sm font-medium text-gray-300 mb-1">Username</label>
             <input
               type="text"
-              name="newUserName"
-              value={formData.newUserName}
+              name="Username"
+              value={formData.Username}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Image URL*/}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">imageUrl</label>
+            <input
+              type="text"
+              name="imageUrl"
+              value={formData.imageUrl}
               onChange={handleChange}
               className="w-full px-4 py-2 bg-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />

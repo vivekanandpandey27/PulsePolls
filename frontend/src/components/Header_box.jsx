@@ -1,100 +1,176 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiHome, FiTrendingUp, FiList, FiCheckCircle } from 'react-icons/fi';
+import { FiUser, FiHome, FiTrendingUp, FiList, FiCheckCircle, FiMenu, FiX } from 'react-icons/fi';
 import { IoIosCreate } from "react-icons/io";
-import  { useState } from 'react';
-import NavButton from './NavButton';
-import { useSelector } from 'react-redux';
 import { IoMdLogIn } from "react-icons/io";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-
+import NavButton from './NavButton';
+import { useSelector } from 'react-redux';
 
 export const Header_box = () => {
-
-
     const navigate = useNavigate();
     const [activeCategory, setActiveCategory] = useState(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const isAuth = useSelector((state) => state.user.authUser);
+
     // Navigation functions
     const myProfile = () => navigate('/profile');
     const goToHome = () => navigate('/');
-    const goToTrending = () => navigate('/trending');
     const goToMyPolls = () => navigate('/myPolls');
-    const goToCompleted = () => navigate('/completed');
+    const goToCompleted = () => navigate('/Completed_Poll');
     const gotoCreatePoll = () => navigate('/CreatePoll');
-    const gotoLogin = () => navigate("/login")
-    const gotoSignUP = () => navigate('/signup')
-    const isAuth = useSelector((state) => state.user.authUser);
-    //console.log("auth",isAuth);
-  return (
-    <header className="sticky top-0 z-20 bg-purple-950 backdrop-blur-lg border-b border-purple-900/30">
-                <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-                    {/* Logo with animation */}
-                    <motion.div 
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="flex items-center space-x-8"
+    const gotoLogin = () => navigate("/login");
+    const gotoSignUP = () => navigate('/signup');
+
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+    };
+
+    return (
+        <header className="sticky top-0 z-50 bg-purple-950 backdrop-blur-lg border-b border-purple-900/30">
+            <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+                {/* Logo with animation */}
+                <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex items-center space-x-4 md:space-x-8"
+                >
+                    {/* Mobile menu button - visible only on small screens */}
+                    <button 
+                        className="md:hidden p-2 rounded-md text-purple-200 hover:text-white focus:outline-none"
+                        onClick={toggleMobileMenu}
+                        aria-label="Toggle menu"
                     >
-                        <h1 
-                            className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform"
-                            onClick={goToHome}
-                        >
-                            Pulse Poll
-                        </h1>
-                        
-                        {/* Navigation Menu with icons */}
-                        <nav className="hidden md:flex space-x-2">
+                        {mobileMenuOpen ? <FiX className="text-2xl" /> : <FiMenu className="text-2xl" />}
+                    </button>
+
+                    <h1 
+                        className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform"
+                        onClick={goToHome}
+                    >
+                        Pulse Poll
+                    </h1>
+                </motion.div>
+                
+                {/* Desktop Navigation - hidden on mobile */}
+                <nav className="hidden md:flex space-x-2">
+                    <NavButton 
+                        onClick={goToHome} 
+                        icon={<FiHome className="mr-2" />} 
+                        text="Home"
+                    />
+                    {!isAuth && (
+                        <NavButton 
+                            onClick={gotoSignUP} 
+                            icon={<MdOutlineCreateNewFolder className="mr-2" />} 
+                            text="Create Account"
+                        />
+                    )}
+                    {isAuth && (
+                        <NavButton 
+                            onClick={goToCompleted} 
+                            icon={<FiCheckCircle className="mr-2" />} 
+                            text="Completed"
+                        />
+                    )}
+                    {isAuth && (
+                        <NavButton 
+                            onClick={gotoCreatePoll} 
+                            icon={<IoIosCreate className="mr-2" />} 
+                            text="Create Poll"
+                        />
+                    )}
+                    {isAuth && (
+                        <NavButton 
+                            onClick={goToMyPolls} 
+                            icon={<FiList className="mr-2" />} 
+                            text="My Polls"
+                        />
+                    )}
+                </nav>
+                
+                {/* Profile/Auth buttons */}
+                <div className="flex items-center space-x-2 cursor-pointer">
+                    {isAuth == null ? (
+                        <div className="hidden sm:block ">
                             <NavButton 
-                                onClick={goToHome} 
-                                icon={<FiHome className="mr-2" />} 
-                                text="Home"
-                            />
-                            {
-                                !isAuth && <NavButton 
-                                onClick={gotoSignUP} 
-                                icon={<MdOutlineCreateNewFolder className="mr-2" />} 
-                                text="Create Account"
-                            />}
-                            
-                            {isAuth && <NavButton 
-                                onClick={goToCompleted} 
-                                icon={<FiCheckCircle className="mr-2" />} 
-                                text="Completed"
-                            />}
-
-                            {isAuth && <NavButton 
-                                onClick={gotoCreatePoll} 
-                                icon={<IoIosCreate className="mr-2" />} 
-                                text="Create Poll"
-                            />}
-
-                            {isAuth && (<NavButton 
-                                onClick={goToMyPolls} 
-                                icon={<FiList className="mr-2" />} 
-                                text="My Polls"
-                            />)}
-                            
-
-                        </nav>
-                    </motion.div>
-                    
-                    {/* Profile Icon with animation */}
-                    {(isAuth == null) ? (<NavButton 
                                 onClick={gotoLogin} 
                                 icon={<IoMdLogIn className="mr-2" />} 
                                 text="Login"
-                            />) : (<motion.button 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={myProfile}
-                        className="p-2 rounded-full bg-purple-900/50 hover:bg-purple-800 transition-all border border-purple-700/30"
-                        aria-label="Profile"
-                    >
-                        <FiUser className="text-xl" />
-                    </motion.button>)}
-                    
+                            />
+                        </div>
+                    ) : (
+                        <img src = {isAuth.profilePhoto} onClick={myProfile} className='w-11 h-11 rounded-full border border-green-400 border-2'/>
+                       
+                    )}
                 </div>
-            </header>
-  )
-}
+            </div>
+
+            {/* Mobile Menu - appears when hamburger is clicked */}
+            {mobileMenuOpen && (
+                <motion.div 
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.2 }}
+                    className="md:hidden bg-purple-900/90 backdrop-blur-sm border-t border-purple-800/30"
+                >
+                    <div className="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                        <NavButton 
+                            onClick={() => { goToHome(); setMobileMenuOpen(false); }}
+                            icon={<FiHome className="mr-2" />} 
+                            text="Home"
+                            fullWidth
+                        />
+                        {!isAuth && (
+                            <>
+                                <NavButton 
+                                    onClick={() => { gotoLogin(); setMobileMenuOpen(false); }}
+                                    icon={<IoMdLogIn className="mr-2" />} 
+                                    text="Login"
+                                    fullWidth
+                                />
+                                <NavButton 
+                                    onClick={() => { gotoSignUP(); setMobileMenuOpen(false); }}
+                                    icon={<MdOutlineCreateNewFolder className="mr-2" />} 
+                                    text="Create Account"
+                                    fullWidth
+                                />
+                            </>
+                        )}
+                        {isAuth && (
+                            <>
+                                <NavButton 
+                                    onClick={() => { gotoCreatePoll(); setMobileMenuOpen(false); }}
+                                    icon={<IoIosCreate className="mr-2" />} 
+                                    text="Create Poll"
+                                    fullWidth
+                                />
+                                <NavButton 
+                                    onClick={() => { goToMyPolls(); setMobileMenuOpen(false); }}
+                                    icon={<FiList className="mr-2" />} 
+                                    text="My Polls"
+                                    fullWidth
+                                />
+                                <NavButton 
+                                    onClick={() => { goToCompleted(); setMobileMenuOpen(false); }}
+                                    icon={<FiCheckCircle className="mr-2" />} 
+                                    text="Completed"
+                                    fullWidth
+                                />
+                                <NavButton 
+                                    onClick={() => { myProfile(); setMobileMenuOpen(false); }}
+                                    icon={<FiUser className="mr-2" />} 
+                                    text="My Profile"
+                                    fullWidth
+                                />
+                            </>
+                        )}
+                    </div>
+                </motion.div>
+            )}
+        </header>
+    );
+};

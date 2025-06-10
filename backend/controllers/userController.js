@@ -154,20 +154,60 @@ exports.logout = async (req,res) => {
         });
 
     } catch {
-        req.res(400).json({
+        res.status(400).json({
             success : false,
             message : "Error While Logout !!",
         })
     }
 }  
 
-exports.profile = async(req , res ) => {
-    try{    
-        const user_id = req.ID;
-        const user = User.findById(user_id);
-    } catch {
-        
+exports.Editprofile = async (req, res) => {
+  try {
+    const user_id = req.ID;
+    console.log("Received form data:", req.body);
+    const {Username} = req.body;
+    //console.log(Username);
+
+
+    const similar_username = await User.findOne({userName : Username});
+
+    console.log(user_id);
+    console.log("Simialr data : ",similar_username);   
+
+    //console.log(similar_username._id.toString());
+    if(similar_username !== null && user_id !== similar_username?._id.toString())
+    {   
+            console.log("unMatched");
+            return res.status(400).json({
+              success: false,
+              message: "UserName Already Taken",
+            });
     }
-}
+    else
+    {
+        console.log("Can update")
+
+        const user = await User.findOneAndUpdate({_id : user_id} , {
+            userName : req.body.Username,
+            fullName : req.body.fullName,
+            profilePhoto : req.body.imageUrl,
+            gender : req.body.gender
+        },{new : true});
+
+        console.log(user);
+
+        return res.status(200).json({
+          success: true,
+          message: "Profile updated successfully",
+        });
+    }
+  } catch (error) {
+
+    return res.status(400).json({
+      success: false,
+      message: "Error while updating profile data!",
+    });
+  }
+};
 
 

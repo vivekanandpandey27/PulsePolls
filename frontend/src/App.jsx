@@ -8,6 +8,7 @@ import Myprofile from './components/MyProfile';
 import Editprofile from  './components/editProfile'
 import CreatePoll from './components/CreatePoll';
 import { MyPolls } from './components/myPolls';
+import { Completed_Poll } from './components/Completed_Poll';
 import { Header_box } from './components/Header_box';
 import { useSelector,useDispatch } from 'react-redux';
 
@@ -24,12 +25,13 @@ return (<div>
           <Route path ="/editprofile"  element  = {<Editprofile/>}/>
           <Route path ="/CreatePoll"  element  = {<CreatePoll/>}/>
           <Route path = "/myPolls" element = {<MyPolls/>}/>
-  
+          <Route path="/Completed_Poll" element={<Completed_Poll/>} />
+
 
           <Route path="/goToProfile" element={<goToProfile />} />
           <Route path="/goToTrending" element={<goToTrending />} />
           <Route path="/goToMyPolls" element={<goToMyPolls />} />
-          <Route path="/goToCompleted" element={<goToCompleted />} />
+          
         
     </Routes>
 

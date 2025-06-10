@@ -4,7 +4,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { setAuthUser } from '../redux/userSlice';
 
 
@@ -13,6 +13,7 @@ const myProfile = () => {
   const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
   const nav = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.authUser);
 
   async function logOut()
   {
@@ -27,21 +28,32 @@ const myProfile = () => {
       dispatch(setAuthUser(null));
       toast.success("LogOut Successfully !")
       nav("/")
-      s
       } catch(error) {
           console.log(error);
       }
   }
 
-  // These would come from your backend API
-  const userData = {
-    name: "Samar Mishra",      // Will be replaced with API data
-    username: "@SamMish_45",  // Will be replaced with API data
-    gender: "Male", // Will be replaced with API data
-    profilePic: 'samar.png'      // Will be replaced with API data
-  };
+  async function fetchProfile()
+  {
+      try{  
+        const res = await axios.get(
+        `${REACT_BASE_URL}/api/v1/user/profile`,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      dispatch(setAuthUser(null));
+      
+      } catch(error) {
+          console.log(error);
+      }
+  }
+
+
+
   const navigate = useNavigate();
-   const editProfile = ()=> navigate("/editProfile");
+  const editProfile = ()=> navigate("/editProfile");
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-blue-900 p-4 text-white">
@@ -61,28 +73,21 @@ const myProfile = () => {
             
                 
               <img 
-                src= 'https://lh3.googleusercontent.com/a/ACg8ocL9zn6Yzu4z3hdDx_nZaUg54vWVu4S0fUm-h_dIHPTCst1FV30HEA=s360-c-no'
+                src= {user.profilePhoto}
                 alt="Profile" 
                 className="w-full h-full rounded-full object-cover"
               />
             
           </div>
           
-          {/* {showEditPhoto && (
-            <div className="absolute top-36 bg-gray-900 p-3 rounded-lg shadow-lg border border-purple-500">
-              <button className="flex items-center text-sm text-blue-300 hover:text-white">
-                <FaUserEdit className="mr-2" />
-                Edit Photo
-              </button>
-            </div>
-          )} */}
+
         </div>
         
         {/* User Info Section */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-1">{userData.name}</h1>
-          <p className="text-blue-300 mb-2">{userData.username}</p>
-          <p className="text-purple-300">{userData.gender}</p>
+          <h1 className="text-2xl font-bold text-white mb-1 ">{user.nameName}</h1>
+          <p className="text-blue-300 mb-2 ">{user.userName}</p>
+          <p className="text-purple-300">{user.gender}</p>
         </div>
         
         {/* Action Buttons */}

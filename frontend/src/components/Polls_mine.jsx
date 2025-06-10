@@ -1,10 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { MdDelete } from "react-icons/md";
+import toast from 'react-hot-toast';
 
 const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
 
-export const Poll = ({ data, refetch }) => {
+
+export const Polls_mine = ({ data, refetch }) => {
   async function ClickHandler(id, index) {
     try {
       const VoteData = {
@@ -27,6 +30,27 @@ export const Poll = ({ data, refetch }) => {
     }
   }
 
+  async function deletePoll(poll_id){
+
+    const delete_data = {
+        id : poll_id
+    }
+    try{
+        const res = await axios.post(
+        `${REACT_BASE_URL}/api/v1/polls/delete`,
+        delete_data,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+
+        toast.success("Poll Deleted Successfully !")
+
+    } catch {
+        console.log("Error While Deleting Poll");
+    }
+  }
+
   const title = data.title;
   const choices = data.options;
   const imageUrl = data.imageUrl;
@@ -42,9 +66,9 @@ export const Poll = ({ data, refetch }) => {
         <div className='font-bold text-white flex-1 min-w-0'>
           <div className='text-sm sm:text-base line-clamp-2'>{title}</div>
         </div>
-         {/* <div className='w-4 h-4 rounded-full scale-150 font-extrabold text-green-500 text-3xl '>
-           .
-         </div> */}
+        <div>
+            <MdDelete onClick = {()=> {deletePoll(data._id)}} className='text-red-600 scale-150 rounded-full shadow shadow-2xl shadow-neutral-400 cursor-pointer'/>
+        </div>
       </div>
 
       {/* OPTIONS */}

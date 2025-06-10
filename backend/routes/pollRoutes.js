@@ -6,7 +6,7 @@ const { isAuthenticated } = require('../middleware/isAuthenticated');
 
 router.post("/post",isAuthenticated,createPoll);
 router.get("/allpost",showAllPolls);
-router.delete("/delete/:id",isAuthenticated,deletePoll);
+router.post("/delete",isAuthenticated,deletePoll);
 router.post("/vote",isAuthenticated,votePolls);
 
 module.exports = router;
