@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef, } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FiUser, FiHome, FiTrendingUp, FiList, FiCheckCircle, FiMenu, FiX } from 'react-icons/fi';
@@ -7,12 +7,23 @@ import { IoMdLogIn } from "react-icons/io";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import NavButton from './NavButton';
 import { useSelector } from 'react-redux';
+import { IoSearch } from "react-icons/io5";
+import axios from 'axios';
+import { SearchResultProfile } from './searchResultProfile';
 
 export const Header_box = () => {
     const navigate = useNavigate();
     const [activeCategory, setActiveCategory] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const isAuth = useSelector((state) => state.user.authUser);
+    const[searchtext,setsearchtext] = useState("");
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const [searchResults, setsearchResult] = useState(null);
+
+
+    const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+
 
     // Navigation functions
     const myProfile = () => navigate('/profile');
@@ -23,9 +34,36 @@ export const Header_box = () => {
     const gotoLogin = () => navigate("/login");
     const gotoSignUP = () => navigate('/signup');
 
+    // const dropdownRef = useRef(null);
+
+   
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
+
+    const SearchSubmitHandler = async () => {
+        const data = {
+            query : searchtext,
+        }
+
+        try{
+            const res = await axios.post(
+            `${REACT_BASE_URL}/api/v1/user/getOtherUser`,
+            data,
+            {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true,
+            }
+           );
+           //console.log("res : ",res);
+           setsearchResult(res.data);
+           console.log(searchResults);
+           setShowDropdown(true);
+
+        } catch(error) {
+            console.log(error);
+        }   
+    }
 
     return (
         <header className="sticky top-0 z-50 bg-purple-950 backdrop-blur-lg border-b border-purple-900/30">
@@ -53,7 +91,31 @@ export const Header_box = () => {
                         Pulse Poll
                     </h1>
                 </motion.div>
+
+                {/* SEARCH BAR */}
+                <div className='flex flex-col relative'>
+                    <div className='flex  border border-[#3b3b6d] rounded-xl pr-3'>
+                       <input
+                       id="searchBar"
+                       name="searchBar"
+                       type= 'text'
+                       value = {searchtext}
+                       onChange= {(event)=> {setsearchtext(event.target.value)}}
+                       onClick={() => {setShowDropdown(false)}}
+                       placeholder="Search Here..."
+                       className="w-60 px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
+                       />
+                       
+                   <IoSearch className='ml-4 my-auto' onClick={SearchSubmitHandler}/>
+                   </div>
+
+                  {/* Enhanced Window Box for showing Search Results */}
+                  {showDropdown && ( <SearchResultProfile searchResults = {searchResults}/>)}
+                </div>
                 
+                
+
+
                 {/* Desktop Navigation - hidden on mobile */}
                 <nav className="hidden md:flex space-x-2">
                     <NavButton 

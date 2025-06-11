@@ -30,22 +30,23 @@ export const MyPolls = () => {
   //const authUser = useSelector((state) => state.user.authUser);
   console.log(authUser.id)
 
+  const filtered_data = data.filter((option) => option.creator === authUser?.id);
+  console.log("FL DATA : ",filtered_data);
+
   useEffect(() => {
     fetchPollData(changedata); 
   },[]);
 
-  return (
-
-    
-     <div className='min-h-screen p-4 sm:p-6 lg:p-8 bg-purple-900'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6'>
-             {data && data.filter((option) => option.creator === authUser?.id).map((option, index) => (
-      <Polls_mine key={index} data={option} />
-             ))}
-         </div>
+  return filtered_data.length === 0 ? (
+    <div className='bg-violet-900 h-screen text-white flex justify-center items-start pt-10 text-4xl font-bold shadow-xl shadow-red-800 rounded-lg '>Create Poll first..!</div>
+  ) : (
+    <div className='min-h-screen p-4 sm:p-6 lg:p-8 bg-purple-900'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6'>
+        {filtered_data.map((option, index) => (
+          <Polls_mine key={index} data={option} />
+        ))}
       </div>
-
+    </div>
   );
 };
-
 
