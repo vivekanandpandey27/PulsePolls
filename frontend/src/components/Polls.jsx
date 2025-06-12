@@ -30,6 +30,11 @@ export const Poll = ({ data, refetch ,color}) => {
   const title = data.title;
   const choices = data.options;
   const imageUrl = data.imageUrl;
+  const expiry = data.expiresAt;
+  const isExpired = new Date(expiry).getTime() < Date.now()
+
+  console.log("expiry : ",expiry);
+
   const [selectedOption, setSelectedOption] = useState(null);
   
   return (
@@ -42,6 +47,11 @@ export const Poll = ({ data, refetch ,color}) => {
         <div className='font-bold text-white flex-1 min-w-0'>
           <div className='text-sm sm:text-base line-clamp-2'>{title}</div>
         </div>
+        <div className={`flex border border-${isExpired ? "bg-gray-500" : "bg-green-400"} h-9 w- rounded-md border-2 pr-1`}>
+          {isExpired ? (<div className='px-2 scale-150 font-extrabold'> .</div>) : (<img className='h-8' src = "https://lh3.googleusercontent.com/DF46zaVkqhFbpBdc6mXIk4jJlZW_pEQrv2fXHYJj1Yff9ev-Fc71BaxOjZeeBaCVLzk=w400"/>) } 
+          <div className= {`pt-1 pr-1 text-${isExpired ? "bg-gray-500" : "bg-green-400"}`}>{isExpired ? "Completed" : "Live"}</div>
+        </div>
+        
          {/* <div className='w-4 h-4 rounded-full scale-150 font-extrabold text-green-500 text-3xl '>
            .
          </div> */}
