@@ -50,7 +50,8 @@ const editProfile = () => {
         fullName : formData.fullName,
         id : User.id,
         profilePhoto : formData.imageUrl,
-        gender : formData.gender
+        gender : formData.gender,
+        bio : formData.bio
       }
       console.log(newAuth);
 

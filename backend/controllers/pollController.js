@@ -49,8 +49,16 @@ const deletePoll = async (req,res)=>{
 
 const showAllPolls = async(req,res)=>{
     try{
-       const polls = await pollModel.find().sort({createdAt:-1});
-       res.status(200).json(polls);
+       const polls = await pollModel.find()
+  .sort({ createdAt: -1 })
+  .populate({
+    path: 'creator',
+    model: 'User',
+    select: '-password -__v' // Excluding sensitive/unecessary fields
+  });
+
+res.status(200).json(polls);
+      
     }
     catch(error){
         res.status(500).json({success : false,error : 'Failed to fetch polls' });

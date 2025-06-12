@@ -72,7 +72,7 @@ export const Header_box = () => {
     }
 
     return (
-        <header className="sticky top-0 z-50 bg-purple-950 backdrop-blur-lg border-b border-purple-900/30">
+       <header className="sticky top-0 z-50 bg-black backdrop-blur-lg border-b border-white/20" >
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
                 
                 {/* Logo with animation */}
@@ -92,7 +92,7 @@ export const Header_box = () => {
                     </button>
 
                     <h1 
-                        className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform"
+                        className="text-xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform"
                         onClick={goToHome}
                     >
                         Pulse Poll
@@ -113,7 +113,7 @@ export const Header_box = () => {
                        className="w-60 px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
                        />
 
-                   <IoSearch className='ml-4 my-auto cursor-pointer  scale-150' onClick={SearchSubmitHandler}/>
+                   <IoSearch className='ml-4 my-auto cursor-pointer  scale-150 text-white' onClick={SearchSubmitHandler}/>
                    </div>
 
                   {/* Enhanced Window Box for showing Search Results */}
@@ -122,13 +122,14 @@ export const Header_box = () => {
                 </div>
                 
                 
-
+                
 
                 {/* Desktop Navigation - hidden on mobile */}
                 <nav className="hidden md:flex space-x-2">
                     <NavButton 
+                        
                         onClick={goToHome} 
-                        icon={<FiHome className="mr-2" />} 
+                        icon={<FiHome className="mr-2 " />} 
                         text="Home"
                     />
                    

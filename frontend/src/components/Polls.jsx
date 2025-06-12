@@ -1,10 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { SearchResultProfile } from './searchResultProfile';
+import { useNavigate } from 'react-router-dom';
 
 const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
 
-export const Poll = ({ data, refetch ,color}) => {
+export const Poll = ({ data, refetch ,color,showCreator}) => {
+
+
+  const navigate = useNavigate();
+
+ 
+
   async function ClickHandler(id, index) {
     try {
       const VoteData = {
@@ -32,13 +40,33 @@ export const Poll = ({ data, refetch ,color}) => {
   const imageUrl = data.imageUrl;
   const expiry = data.expiresAt;
   const isExpired = new Date(expiry).getTime() < Date.now()
+  const creator = data.creator;
 
+  console.log("creator of post : ",creator);
   console.log("expiry : ",expiry);
 
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleProfileClick = (people) => {
+    navigate("/OthersProfile", { state: { userData: people } });
+  }
   
   return (
-    <div className = {` bg-${color} border border-neutral-900 rounded-2xl w-full p-4 backdrop-blur-sm shadow-lg transition-all hover:shadow-slate-500 flex flex-col h-full`}  >
+    <div className = {` bg-${color} border border-gray-700 rounded-2xl w-full min-w-[30rem] p-4 backdrop-blur-sm shadow-lg transition-all hover:shadow-slate-500 flex flex-col h-full `}  >
+      {/* Poll Admin */}
+       <div  onClick={() => handleProfileClick(creator)}  className= { ` ${showCreator ?  null : "hidden" } px-4 py-3  cursor-pointer transition-colors duration-150 flex items-center  border border-gray-700 rounded-xl mb-3 bg-slate-900`}>
+                      
+                      <div className="w-8 h-8 scale-150 mr-1 rounded-full bg-blue-100 overflow-hidden  flex items-center justify-center text-blue-600 mr-3">
+                        <img src = {creator.profilePhoto} className='scale-125'/>
+                      </div>
+
+                      <div>
+                        <p className="font-medium text-white text-xl">{creator.fullName}</p>
+                        {creator.fullName && (<p className="text-xs text-white">{"@" + creator.userName} </p>)}
+                      </div>
+
+      </div>
+
       {/* LOGO AND TITLE */}
       <div className='flex space-x-3 mb-4'>
         <div className="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 overflow-hidden rounded-full">

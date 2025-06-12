@@ -55,12 +55,14 @@ const OthersProfile = () => {
   return (
     <div className="bg-black text-white min-h-screen pb-16">
       {/* Profile Header */}
-      <div className="p-4 pl-20 pt-10">
-        <div className="flex items-start">
-
-          <button onClick={() => navigate('/')} className="flex items-center text-blue-300 hover:text-white">
-              <FaArrowLeft className="" />
+      <div className="p-4 pl-5 pt-7">
+          <button onClick={() => navigate('/')} className=" text-blue-300 hover:text-white pr-10 scale-150">
+              <FaArrowLeft className="border border-gray-800 rounded-full scale-150 mr-1"/>
           </button>
+
+        <div className="flex items-start pl-10">
+
+         
 
 
           {/* Larger Profile Picture with ring */}
