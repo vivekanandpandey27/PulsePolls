@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
 
-export const Poll = ({ data, refetch }) => {
+export const Poll = ({ data, refetch ,color}) => {
   async function ClickHandler(id, index) {
     try {
       const VoteData = {
@@ -33,7 +33,7 @@ export const Poll = ({ data, refetch }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   
   return (
-    <div className='bg-slate-900 border border-neutral-900 rounded-2xl w-full p-4 backdrop-blur-sm shadow-lg transition-all hover:shadow-slate-500 flex flex-col h-full'>
+    <div className = {` bg-${color} border border-neutral-900 rounded-2xl w-full p-4 backdrop-blur-sm shadow-lg transition-all hover:shadow-slate-500 flex flex-col h-full`}  >
       {/* LOGO AND TITLE */}
       <div className='flex space-x-3 mb-4'>
         <div className="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 overflow-hidden rounded-full">

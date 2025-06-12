@@ -33,6 +33,7 @@ export const Header_box = () => {
     const gotoCreatePoll = () => navigate('/CreatePoll');
     const gotoLogin = () => navigate("/login");
     const gotoSignUP = () => navigate('/signup');
+   
 
     // const dropdownRef = useRef(null);
 
@@ -123,6 +124,7 @@ export const Header_box = () => {
                         icon={<FiHome className="mr-2" />} 
                         text="Home"
                     />
+                   
                     {!isAuth && (
                         <NavButton 
                             onClick={gotoSignUP} 
@@ -222,6 +224,7 @@ export const Header_box = () => {
                                     text="Completed"
                                     fullWidth
                                 />
+                                
                                 <NavButton 
                                     onClick={() => { myProfile(); setMobileMenuOpen(false); }}
                                     icon={<FiUser className="mr-2" />} 

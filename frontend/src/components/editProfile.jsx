@@ -18,7 +18,8 @@ const editProfile = () => {
     Username: User.userName,
     fullName: User.fullName,
     imageUrl : User.profilePhoto,
-    gender: User.gender
+    gender: User.gender,
+    bio : User.bio
   });
 
   
@@ -111,6 +112,19 @@ const editProfile = () => {
               type="text"
               name="Username"
               value={formData.Username}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Bio */}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Bio</label>
+            <input
+              type="text"
+              name="bio"
+              value={formData.bio}
               onChange={handleChange}
               className="w-full px-4 py-2 bg-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />

@@ -11,11 +11,20 @@ import { MyPolls } from './components/myPolls';
 import { Completed_Poll } from './components/Completed_Poll';
 import { Header_box } from './components/Header_box';
 import { useSelector,useDispatch } from 'react-redux';
+import OthersProfile from './components/OthersProfile';
+import { useLocation } from 'react-router-dom';
+
 
 
 function App() {
+
+    const location = useLocation();
+    const pathname = location.pathname;
+    console.log("Location: ",location);
 return (<div>
-    <Header_box className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white"/>
+    {
+        pathname === "/OthersProfile" ? (null) : (    <Header_box className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white"/>)
+    }
     
     <Routes>
           <Route path ="/" element = { <HomePage/>} />
@@ -26,6 +35,7 @@ return (<div>
           <Route path ="/CreatePoll"  element  = {<CreatePoll/>}/>
           <Route path = "/myPolls" element = {<MyPolls/>}/>
           <Route path="/Completed_Poll" element={<Completed_Poll/>} />
+          <Route path ="/OthersProfile" element = {<OthersProfile/>}/>
 
 
           <Route path="/goToProfile" element={<goToProfile />} />
