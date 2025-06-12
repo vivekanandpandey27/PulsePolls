@@ -11,6 +11,8 @@ import { IoSearch } from "react-icons/io5";
 import axios from 'axios';
 import { SearchResultProfile } from './searchResultProfile';
 
+
+
 export const Header_box = () => {
     const navigate = useNavigate();
     const [activeCategory, setActiveCategory] = useState(null);
@@ -18,8 +20,8 @@ export const Header_box = () => {
     const isAuth = useSelector((state) => state.user.authUser);
     const[searchtext,setsearchtext] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
-
     const [searchResults, setsearchResult] = useState(null);
+    const [loading, setloading] = useState(false);
 
 
     const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
@@ -48,6 +50,8 @@ export const Header_box = () => {
         }
 
         try{
+            setloading(true);
+
             const res = await axios.post(
             `${REACT_BASE_URL}/api/v1/user/getOtherUser`,
             data,
@@ -56,6 +60,7 @@ export const Header_box = () => {
               withCredentials: true,
             }
            );
+           setloading(false);
            //console.log("res : ",res);
            setsearchResult(res.data);
            console.log(searchResults);
@@ -69,6 +74,7 @@ export const Header_box = () => {
     return (
         <header className="sticky top-0 z-50 bg-purple-950 backdrop-blur-lg border-b border-purple-900/30">
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+                
                 {/* Logo with animation */}
                 <motion.div 
                     initial={{ opacity: 0, x: -20 }}
@@ -106,11 +112,12 @@ export const Header_box = () => {
                        placeholder="Search Here..."
                        className="w-60 px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
                        />
-                       
-                   <IoSearch className='ml-4 my-auto' onClick={SearchSubmitHandler}/>
+
+                   <IoSearch className='ml-4 my-auto cursor-pointer  scale-150' onClick={SearchSubmitHandler}/>
                    </div>
 
                   {/* Enhanced Window Box for showing Search Results */}
+                  {loading ? (<div className='absolute mt-14 w-72 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50 flex items-center text-lg font-bold text-blue-700 '> <img className='h-9 pr-3' src = 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif' /> Loading....</div>) : (null)}
                   {showDropdown && ( <SearchResultProfile searchResults = {searchResults}/>)}
                 </div>
                 
