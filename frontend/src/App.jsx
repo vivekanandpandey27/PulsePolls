@@ -23,7 +23,7 @@ function App() {
     console.log("Location: ",location);
 return (<div>
     {
-        pathname === "/OthersProfile" ? (null) : (    <Header_box className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white"/>)
+        pathname === "/OthersProfile" ? (null) : (    <Header_box className="min-h-screen  bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white"/>)
     }
     
     <Routes>
