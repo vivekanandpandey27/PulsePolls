@@ -9,12 +9,11 @@ import { setSelectedCtegory } from '../redux/PollSlice';
 // Categories data with icons
     const categories = [
         {name: 'all', icon: '🗽'},
-        { name: 'cricket', icon: '🏏' },
-        { name: 'football', icon: '⚽' },
+        { name: 'sports', icon: '🏏' },
+        { name: 'health', icon: '🚑' },
         { name: 'politics', icon: '🏛️' },
         { name: 'news', icon: '📰' },
         { name: 'technology', icon: '💻' },
-        { name: 'science', icon: '🔬' },
         { name: 'entertainment', icon: '🎬' },
         { name: 'education', icon: '📚' },
         { name: 'space', icon: '🚀' },
