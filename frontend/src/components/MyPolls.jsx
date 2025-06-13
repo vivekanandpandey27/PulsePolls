@@ -30,7 +30,7 @@ export const MyPolls = () => {
   //const authUser = useSelector((state) => state.user.authUser);
   console.log(authUser.id)
 
-  const filtered_data = data.filter((option) => option.creator === authUser?.id);
+  const filtered_data = data.filter((option) => option.creator?._id === authUser?.id);
   console.log("FL DATA : ",filtered_data);
 
   useEffect(() => {

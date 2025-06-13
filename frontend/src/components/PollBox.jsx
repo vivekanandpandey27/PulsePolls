@@ -59,7 +59,7 @@ const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
      
  
      <div className='min-h-screen p-4 sm:p-6 lg:p-8'>
-   <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6'>
+   <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 md:gap-6'>
      {final_filtered_Data && final_filtered_Data.map((option, index) => (
        <Poll key={index} data={option} refetch={setreload} showCreator = {true}/>
      ))}

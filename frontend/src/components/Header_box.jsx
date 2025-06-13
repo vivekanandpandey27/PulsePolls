@@ -72,8 +72,8 @@ export const Header_box = () => {
     }
 
     return (
-       <header className="sticky top-0 z-50 bg-black backdrop-blur-lg border-b border-white/20" >
-            <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+       <header className="sticky top-0 z-50 bg-black backdrop-blur-lg border-b border-white/20 " >
+            <div className="container mx-auto  py-3 flex justify-between items-center min-w-full ">
                 
                 {/* Logo with animation */}
                 <motion.div 
@@ -110,7 +110,7 @@ export const Header_box = () => {
                        onChange= {(event)=> {setsearchtext(event.target.value)}}
                        onClick={() => {setShowDropdown(false)}}
                        placeholder="Search Here..."
-                       className="w-60 px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
+                       className="lg:w-60 md:w-40 sm:w-40 w-20 px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
                        />
 
                    <IoSearch className='ml-4 my-auto cursor-pointer  scale-150 text-white' onClick={SearchSubmitHandler}/>
@@ -166,7 +166,7 @@ export const Header_box = () => {
                 {/* Profile/Auth buttons */}
                 <div className="flex items-center space-x-2 cursor-pointer">
                     {isAuth == null ? (
-                        <div className="hidden sm:block ">
+                        <div className="hidden sm:block">
                             <NavButton 
                                 onClick={gotoLogin} 
                                 icon={<IoMdLogIn className="mr-2" />} 
@@ -174,7 +174,7 @@ export const Header_box = () => {
                             />
                         </div>
                     ) : (
-                        <img src = {isAuth.profilePhoto} onClick={myProfile} className='w-11 h-11 rounded-full border border-green-400 border-2'/>
+                        <img src = {isAuth.profilePhoto} onClick={myProfile} className='sm:w-11 w-9 h-9 sm:h-11 rounded-full border border-green-400 border-2 mr-8'/>
                        
                     )}
                 </div>
