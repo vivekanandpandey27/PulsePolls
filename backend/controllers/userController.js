@@ -227,7 +227,7 @@ exports.getOtherUser = async (req, res) => {
         }
 
         // Get all users and only fetch userName and _id, fullName, profilePhoto (lightweight)
-        const allUsers = await User.find({}, 'userName fullName profilePhoto gender bio');
+        const allUsers = await User.find({}, 'userName fullName profilePhoto gender bio totalPosts');
 
         // Similarity calculation using string-similarity
         const matchedUsers = allUsers

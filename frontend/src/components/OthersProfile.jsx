@@ -23,11 +23,11 @@ const OthersProfile = () => {
     fullName: receivedData.fullName,
     username: receivedData.userName,
     bio: receivedData.bio,
-    posts: 0,
+    posts: receivedData.totalPosts,
     
   });
 
-  console.log("BOSSS_______>", receivedData);
+  //console.log("BOSSS_______>", receivedData);
   
 
   
