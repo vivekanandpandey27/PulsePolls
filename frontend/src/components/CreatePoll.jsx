@@ -11,12 +11,12 @@ import { toast } from 'react-hot-toast';
     tags: "", 
     imageUrl: "",
     options: [{ text: "", votes: 0 }],
-    expiresAt: ""
+    expiresAt: null
   });
 
 
   const expiryOptions = [
-  { label: '1 min', value: 1 * 60 * 1000 },
+  { label: '5 min', value: 5 * 60 * 1000 },
   { label: '10 min', value: 10 * 60 * 1000 },
   { label: '1 hour', value: 1 * 60 * 60 * 1000 },
   { label: '5 hours', value: 5 * 60 * 60 * 1000 },
@@ -25,7 +25,9 @@ import { toast } from 'react-hot-toast';
   { label: '3 days', value: 3 * 24 * 60 * 60 * 1000 },
   { label: '1 week', value: 7 * 24 * 60 * 60 * 1000 },
   { label: '1 month', value: 30 * 24 * 60 * 60 * 1000 },   
-  { label: '6 months', value: 6 * 30 * 24 * 60 * 60 * 1000 } 
+  { label: '6 months', value: 6 * 30 * 24 * 60 * 60 * 1000 },
+  { label: '12 months', value: 12 * 30 * 24 * 60 * 60 * 1000 } , 
+  { label: '4 year', value: 4* 12 * 30 * 24 * 60 * 60 * 1000 } 
 ];
 
 
@@ -88,9 +90,10 @@ import { toast } from 'react-hot-toast';
       const res = await axios.post(
         `${REACT_BASE_URL}/api/v1/polls/post`,
         {
-          ...formData,
-          options: filteredOptions
-        },
+    ...formData,
+    expiresAt: formData.expiresAt ? Date.now() + formData.expiresAt : null,
+    options: filteredOptions
+  },
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
@@ -209,7 +212,7 @@ import { toast } from 'react-hot-toast';
           Tags
         </label>
         <div className="flex flex-wrap gap-2">
-          {['Technology', 'Politics', 'Cricket', 'FootBall', 'News', 'Science', 'Space', 'Entertainment', 'Education', 'Gaming'].map((tag) => (
+          {['Technology', 'Politics', 'sports', 'Health', 'News', 'Space', 'Entertainment', 'Education', 'Gaming'].map((tag) => (
             <button
               key={tag}
               type="button"
@@ -231,30 +234,34 @@ import { toast } from 'react-hot-toast';
         </div>
       </div>
 
-      <div className="space-y-2">
+<div className="space-y-2">
   <label className="block text-sm font-medium text-[#e0e0ff]">
     Expiry Time
   </label>
   <div className="flex flex-wrap gap-2">
-    {expiryOptions.map((option) => (
-      <button
-        key={option.value}
-        type="button"
-        onClick={() => {
-          setFormData(prev => ({
-            ...prev,
-            expiresAt : Date.now() + option.value, 
-          }));
-        }}
-        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-          formData.expiresAt === option.value 
-            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30' 
-            : 'bg-[#1e1b4b20] text-[#e0e0ff] hover:bg-[#2e2b5b50] border border-[#3b3b6d]'
-        }`}
-      >
-        {option.label}
-      </button>
-    ))}
+    {expiryOptions.map((option) => {
+      // Store the original option value for comparison
+      const optionValue = option.value;
+      return (
+        <button
+          key={optionValue}
+          type="button"
+          onClick={() => {
+            setFormData(prev => ({
+              ...prev,
+              expiresAt: optionValue // Store the duration directly
+            }));
+          }}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+            formData.expiresAt === optionValue
+              ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
+              : 'bg-[#1e1b4b20] text-[#e0e0ff] hover:bg-[#2e2b5b50] border border-[#3b3b6d]'
+          } active:scale-95`}
+        >
+          {option.label}
+        </button>
+      );
+    })}
   </div>
 </div>
 

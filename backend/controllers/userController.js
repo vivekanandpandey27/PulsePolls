@@ -1,13 +1,15 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const stringSimilarity = require('string-similarity');
+
 
 exports.register = async (req,res) => {
     try{
-        const { fullName, userName, password, confirmPassword, gender } = req.body;
+        const { fullName, userName, password,bio, confirmPassword, gender } = req.body;
 
         //Here we are dooing data vlidation 
-        if (!fullName || !userName || !password || !confirmPassword || !gender) 
+        if (!fullName || !userName || !bio ||!password || !confirmPassword || !gender) 
         {
             return res.status(400).json({
                 message : "All Data Fields are required !",
@@ -44,6 +46,7 @@ exports.register = async (req,res) => {
         const newUser = await User.create({
             fullName,
             userName,
+            bio,
             password: encryptedPassword,
             gender,
             profilePhoto : gender == "male" ? maleProfilePhoto : femaleProfilePhoto
@@ -127,6 +130,7 @@ exports.login = async (req,res) => {
         .json({
              userName : user.userName,
              fullName : user.fullName,
+             bio : user.bio,
              id : user._id,
              profilePhoto : user.profilePhoto,
              gender : user.gender,
@@ -190,6 +194,7 @@ exports.Editprofile = async (req, res) => {
         const user = await User.findOneAndUpdate({_id : user_id} , {
             userName : req.body.Username,
             fullName : req.body.fullName,
+            bio : req.body.bio,
             profilePhoto : req.body.imageUrl,
             gender : req.body.gender
         },{new : true});
@@ -208,6 +213,41 @@ exports.Editprofile = async (req, res) => {
       message: "Error while updating profile data!",
     });
   }
+};
+
+
+exports.getOtherUser = async (req, res) => {
+    try {
+        const { query } = req.body;
+
+        //console.log('BODY : ',req.body);
+
+        if (!query) {
+            return res.status(400).json({ error: "Search query is missing" });
+        }
+
+        // Get all users and only fetch userName and _id, fullName, profilePhoto (lightweight)
+        const allUsers = await User.find({}, 'userName fullName profilePhoto gender bio totalPosts');
+
+        // Similarity calculation using string-similarity
+        const matchedUsers = allUsers
+            .map(user => {
+                const similarity = stringSimilarity.compareTwoStrings(
+                    query.toLowerCase(),
+                    user.userName.toLowerCase()
+                );
+                return { user, similarity };
+            })
+            .filter(obj => obj.similarity >= 0.2)  // 80% or higher match
+            .sort((a, b) => b.similarity - a.similarity) // sort descending
+            .map(obj => obj.user); // return only user objects
+
+        res.status(200).json(matchedUsers);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong while searching users" });
+    }
 };
 
 

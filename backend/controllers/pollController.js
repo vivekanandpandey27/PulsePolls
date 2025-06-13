@@ -19,6 +19,8 @@ const createPoll = async (req,res)=>{
         );
 
         await poll.save();
+        await User.findByIdAndUpdate(id, { $inc: { totalPosts: 1 } });
+
         res.status(201).json({success : true, message : "Created Successfully" ,poll});
     }
     catch(error){
@@ -33,9 +35,11 @@ const createPoll = async (req,res)=>{
 //2-----Deletepoll
 const deletePoll = async (req,res)=>{
     try{
+        const user_id = req.ID;
+
         const id = req.body.id;
         const poll = await pollModel.findByIdAndDelete(id);
-        
+        await User.findByIdAndUpdate(user_id, { $inc: { totalPosts: -1 } });
         res.json({success : true,message : "Deleted Successfully"});
     }
     catch(error){
@@ -49,8 +53,16 @@ const deletePoll = async (req,res)=>{
 
 const showAllPolls = async(req,res)=>{
     try{
-       const polls = await pollModel.find().sort({createdAt:-1});
-       res.status(200).json(polls);
+       const polls = await pollModel.find()
+  .sort({ createdAt: -1 })
+  .populate({
+    path: 'creator',
+    model: 'User',
+    select: '-password -__v' // Excluding sensitive/unecessary fields
+  });
+
+res.status(200).json(polls);
+      
     }
     catch(error){
         res.status(500).json({success : false,error : 'Failed to fetch polls' });

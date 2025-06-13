@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 export const Signup = () => {
 
 
-    const [FormData,SetformData] = useState({fullName : "",userName : "",password : "",confirmPassword : "",gender:"Male" });
+    const [FormData,SetformData] = useState({fullName : "",userName : "", bio : "",password : "",confirmPassword : "",gender:"Male" });
     const [PasswordVisibility, setPasswordVisibility] = useState(false);
     const navigate=useNavigate();
    
@@ -48,7 +48,7 @@ try{
     if(res.data.success){
       navigate('/login');
       toast.success(res.data.message);
-      SetformData({fullName : "",userName : "",password : "",confirmPassword : "",gender:"" });
+      SetformData({fullName : "",userName : "",bio : "",password : "",confirmPassword : "",gender:"" });
     }
     }
     catch(error){
@@ -108,6 +108,26 @@ return (
           />
           <svg className="absolute right-3 top-3.5 h-5 w-5 text-[#a5b4fc80]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+          </svg>
+        </div>
+      </div>
+
+       <div className="space-y-2">
+        <label htmlFor="bio" className="block text-sm font-medium text-[#e0e0ff]">
+          Bio
+        </label>
+        <div className="relative">
+          <input
+            id="bio"
+            name="bio"
+            type="text"
+            onChange={changeHandler}
+            value={FormData.bio}
+            placeholder="Bio"
+            className="w-full px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
+          />
+          <svg className="absolute right-3 top-3.5 h-5 w-5 text-[#a5b4fc80]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
         </div>
       </div>
