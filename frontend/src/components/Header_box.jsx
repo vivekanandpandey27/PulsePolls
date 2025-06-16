@@ -72,8 +72,8 @@ export const Header_box = () => {
     }
 
     return (
-       <header className="sticky top-0 z-50 bg-black backdrop-blur-lg border-b border-white/20 " >
-            <div className="container mx-auto  py-3 flex justify-between items-center min-w-full ">
+        <header className="sticky top-0 z-50 bg-black backdrop-blur-lg border-b border-white/20 " >
+            <div className="container mx-auto  py-3 flex justify-between items-center ">
                 
                 {/* Logo with animation */}
                 <motion.div 
@@ -164,7 +164,7 @@ export const Header_box = () => {
                 </nav>
                 
                 {/* Profile/Auth buttons */}
-                <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="flex items-center space-x-2 cursor-pointer justify-center">
                     {isAuth == null ? (
                         <div className="hidden sm:block">
                             <NavButton 
@@ -174,7 +174,7 @@ export const Header_box = () => {
                             />
                         </div>
                     ) : (
-                        <img src = {isAuth.profilePhoto} onClick={myProfile} className='sm:w-11 w-9 h-9 sm:h-11 rounded-full border border-green-400 border-2 mr-8'/>
+                        <img src = {isAuth.profilePhoto} onClick={myProfile} className=' sm:w-11  h-9 w-9 sm:h-11 rounded-full border border-green-400 border-2 mr-3'/>
                        
                     )}
                 </div>

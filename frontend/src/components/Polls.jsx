@@ -42,7 +42,7 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
   const expiry = data.expiresAt;
   const isExpired = new Date(expiry).getTime() < Date.now()
   const creator = data.creator;
-
+  //console.log(creator);
   console.log("creator of post : ",creator);
   console.log("expiry : ",expiry);
 
