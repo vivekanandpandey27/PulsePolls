@@ -50,6 +50,19 @@ const MyProfile = () => {
 
   const editProfile = () => navigate("/editProfile");
 
+  const BlueTick = () => (
+    <svg className="inline ml-1" width="19" height="19" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
+      <path 
+        d="M7 12L10.5 15.5L17 9" 
+        stroke="white" 
+        strokeWidth="2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+
   // Only UI changes below this point
   return (
     <div className="min-h-screen bg-black text-white p-0 relative">
@@ -83,7 +96,7 @@ const MyProfile = () => {
 
         {/* User Information */}
         <div className="text-center max-w-2xl w-full">
-          <h1 className="text-3xl font-bold mb-2">{user.fullName}</h1>
+          <h1 className="text-3xl font-bold mb-2">{user.fullName}<BlueTick /></h1>
           <p className="text-blue-400 text-lg mb-4 bg-gray-900 rounded-lg mx-auto w-48">@{user.userName }</p>
           
           {user?.bio && (
