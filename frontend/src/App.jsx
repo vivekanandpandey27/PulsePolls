@@ -7,7 +7,8 @@ import HomePage from './components/HomePage';
 import Myprofile from './components/MyProfile';
 import Editprofile from  './components/editProfile'
 import CreatePoll from './components/CreatePoll';
-import { MyPolls } from './components/myPolls';
+import { MyPolls } from './components/MyPolls';
+
 import { Completed_Poll } from './components/Completed_Poll';
 import { Header_box } from './components/Header_box';
 import { useSelector,useDispatch } from 'react-redux';
