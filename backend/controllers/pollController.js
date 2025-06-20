@@ -7,7 +7,7 @@ const createPoll = async (req,res)=>{
 
         //Extracting User's Id form req
         const id = req.ID;
-        //console.log(id);
+        console.log("Coming Request : ",req);
         const{title, tags, imageUrl ,options, expiresAt} = req.body;
 
         const poll = new pollModel(
