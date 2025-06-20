@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUser } from '../redux/userSlice';
 
+
 const MyProfile = () => {
-  // Your existing logic remains exactly the same
+
   const [showEditPhoto, setShowEditPhoto] = useState(false);
   const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
   const nav = useNavigate();
@@ -15,7 +16,6 @@ const MyProfile = () => {
   const user = useSelector((state) => state.user.authUser);
   const navigate = useNavigate();
 
-  // Your existing functions remain exactly the same
   async function logOut() {
     try {  
       const res = await axios.get(
@@ -50,7 +50,19 @@ const MyProfile = () => {
 
   const editProfile = () => navigate("/editProfile");
 
-  // Only UI changes below this point
+  const BlueTick = () => (
+    <svg className="inline ml-1" width="19" height="19" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
+      <path 
+        d="M7 12L10.5 15.5L17 9" 
+        stroke="white" 
+        strokeWidth="2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+
   return (
     <div className="min-h-screen bg-black text-white p-0 relative">
      
@@ -64,26 +76,24 @@ const MyProfile = () => {
         </button>
       </div>
 
-      {/* Profile Content - Full Page Layout */}
+
+
       <div className="flex flex-col items-center justify-center py-8 px-4">
-        {/* Profile Picture with Hover Effect */}
+
+        {/* Profile Picture */}
         <div className="relative mb-8 group">
           <div className="w-40 h-40 md:w-52 md:h-52 rounded-full bg-gradient-to-br from-purple-600 to-blue-500 p-1">
             <img 
               src={user.profilePhoto} 
               alt="Profile"
               className="w-full h-full rounded-full object-cover border-4 border-gray-900"
-              onError={(e) => {
-                e.target.onerror = null; 
-                
-              }}
             />
           </div>
         </div>
 
         {/* User Information */}
         <div className="text-center max-w-2xl w-full">
-          <h1 className="text-3xl font-bold mb-2">{user.fullName}</h1>
+          <h1 className="text-3xl font-bold mb-2">{user.fullName}<BlueTick /></h1>
           <p className="text-blue-400 text-lg mb-4 bg-gray-900 rounded-lg mx-auto w-48">@{user.userName }</p>
           
           {user?.bio && (

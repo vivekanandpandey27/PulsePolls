@@ -1,7 +1,6 @@
-import React, { useState,useRef, } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiHome, FiTrendingUp, FiList, FiCheckCircle, FiMenu, FiX } from 'react-icons/fi';
+import { FiUser, FiHome, FiList, FiCheckCircle, FiMenu, FiX } from 'react-icons/fi';
 import { IoIosCreate } from "react-icons/io";
 import { IoMdLogIn } from "react-icons/io";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
@@ -14,6 +13,7 @@ import { SearchResultProfile } from './searchResultProfile';
 
 
 export const Header_box = () => {
+    
     const navigate = useNavigate();
     const [activeCategory, setActiveCategory] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,9 +37,6 @@ export const Header_box = () => {
     const gotoSignUP = () => navigate('/signup');
    
 
-    // const dropdownRef = useRef(null);
-
-   
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
@@ -72,21 +69,16 @@ export const Header_box = () => {
     }
 
     return (
-       <header className="sticky top-0 z-50 bg-black backdrop-blur-lg border-b border-white/20 " >
-            <div className="container mx-auto  py-3 flex justify-between items-center min-w-full ">
-                
-                {/* Logo with animation */}
-                <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="flex items-center space-x-4 md:space-x-8"
-                >
-                    {/* Mobile menu button - visible only on small screens */}
+        <header className="sticky top-0 z-50 bg-black backdrop-blur-lg border-b border-white/20 " >
+            <div className="container mx-auto  py-3 flex justify-between items-center ">
+
+                {/* Logo and Menu in Phone size*/}
+                <div className="flex items-center space-x-4 md:space-x-8">
+                    
+                    {/* Mobile Menu for smaller screen*/}
                     <button 
                         className="md:hidden p-2 rounded-md text-purple-200 hover:text-white focus:outline-none"
                         onClick={toggleMobileMenu}
-                        aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? <FiX className="text-2xl" /> : <FiMenu className="text-2xl" />}
                     </button>
@@ -97,9 +89,9 @@ export const Header_box = () => {
                     >
                         Pulse Poll
                     </h1>
-                </motion.div>
+                </div>
 
-                {/* SEARCH BAR */}
+                {/* SEARCH BAR FOR SEARCHING OTHER USER'S PROFILE*/}
                 <div className='flex flex-col relative'>
                     <div className='flex  border border-[#3b3b6d] rounded-xl pr-3'>
                        <input
@@ -109,12 +101,13 @@ export const Header_box = () => {
                        value = {searchtext}
                        onChange= {(event)=> {setsearchtext(event.target.value)}}
                        onClick={() => {setShowDropdown(false)}}
-                       placeholder="Search Here..."
+                       placeholder="Search Profile..."
                        className="lg:w-60 md:w-40 sm:w-40 w-20 px-5 py-3 rounded-xl bg-[#1e1b4b20] text-white placeholder-[#a5b4fc80] border border-[#3b3b6d] focus:outline-none focus:border-[#818cf8] focus:ring-2 focus:ring-[#6366f130] transition-all"
                        />
 
                    <IoSearch className='ml-4 my-auto cursor-pointer  scale-150 text-white' onClick={SearchSubmitHandler}/>
                    </div>
+
 
                   {/* Enhanced Window Box for showing Search Results */}
                   {loading ? (<div className='absolute mt-14 w-72 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50 flex items-center text-lg font-bold text-blue-700 '> <img className='h-9 pr-3' src = 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif' /> Loading....</div>) : (null)}
@@ -124,7 +117,8 @@ export const Header_box = () => {
                 
                 
 
-                {/* Desktop Navigation - hidden on mobile */}
+                {/* Desktop Navigation will not show on mobile */}
+
                 <nav className="hidden md:flex space-x-2">
                     <NavButton 
                         
@@ -164,7 +158,7 @@ export const Header_box = () => {
                 </nav>
                 
                 {/* Profile/Auth buttons */}
-                <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="flex items-center space-x-2 cursor-pointer justify-center">
                     {isAuth == null ? (
                         <div className="hidden sm:block">
                             <NavButton 
@@ -174,30 +168,27 @@ export const Header_box = () => {
                             />
                         </div>
                     ) : (
-                        <img src = {isAuth.profilePhoto} onClick={myProfile} className='sm:w-11 w-9 h-9 sm:h-11 rounded-full border border-green-400 border-2 mr-8'/>
+                        <img src = {isAuth.profilePhoto} onClick={myProfile} className=' sm:w-11  h-9 w-9 sm:h-11 rounded-full border border-green-400 border-2 mr-3'/>
                        
                     )}
                 </div>
             </div>
 
-            {/* Mobile Menu - appears when hamburger is clicked */}
+            {/* Mobile Menu only appears when hamburger is clicked */}
             {mobileMenuOpen && (
-                <motion.div 
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.2 }}
-                    className="md:hidden bg-purple-900/90 backdrop-blur-sm border-t border-purple-800/30"
-                >
+                <div className="md:hidden bg-slate-900 backdrop-blur-sm border-t border-purple-800/30">
+
                     <div className="container mx-auto px-4 py-3 flex flex-col space-y-3">
+
                         <NavButton 
                             onClick={() => { goToHome(); setMobileMenuOpen(false); }}
                             icon={<FiHome className="mr-2" />} 
                             text="Home"
                             fullWidth
                         />
+
                         {!isAuth && (
-                            <>
+                            <div>
                                 <NavButton 
                                     onClick={() => { gotoLogin(); setMobileMenuOpen(false); }}
                                     icon={<IoMdLogIn className="mr-2" />} 
@@ -210,7 +201,7 @@ export const Header_box = () => {
                                     text="Create Account"
                                     fullWidth
                                 />
-                            </>
+                            </div>
                         )}
                         {isAuth && (
                             <>
@@ -242,7 +233,7 @@ export const Header_box = () => {
                             </>
                         )}
                     </div>
-                </motion.div>
+                </div>
             )}
         </header>
     );

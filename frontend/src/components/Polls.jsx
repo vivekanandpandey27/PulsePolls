@@ -43,8 +43,6 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
   const isExpired = new Date(expiry).getTime() < Date.now()
   const creator = data.creator;
 
-  console.log("creator of post : ",creator);
-  console.log("expiry : ",expiry);
 
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -55,6 +53,19 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
   const showtoast = () => {
     toast.error("Poll is Expired !");
   }
+
+  const BlueTick = () => (
+    <svg className="inline ml-1" width="15" height="15" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
+      <path 
+        d="M7 12L10.5 15.5L17 9" 
+        stroke="white" 
+        strokeWidth="2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
   
   return (
     <div className = {` bg-${color} border border-gray-700 rounded-2xl w-full min-w-[10rem] 2xl:min-w-[30rem] p-4 backdrop-blur-sm shadow-lg transition-all hover:shadow-slate-500 flex flex-col h-full `}  >
@@ -66,7 +77,7 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
                       </div>
 
                       <div>
-                        <p className="font-medium text-white text-xl">{creator.fullName}</p>
+                        <p className="font-medium text-white text-xl">{creator.fullName}<BlueTick /></p>
                         {creator.fullName && (<p className="text-xs text-white">{"@" + creator.userName} </p>)}
                       </div>
 
@@ -85,9 +96,6 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
           <div className= {`pt-1 pr-1 text-${isExpired ? "white" : "green-400"}`}>{isExpired ? "Completed" : "Live"}</div>
         </div>
         
-         {/* <div className='w-4 h-4 rounded-full scale-150 font-extrabold text-green-500 text-3xl '>
-           .
-         </div> */}
       </div>
 
       {/* OPTIONS */}

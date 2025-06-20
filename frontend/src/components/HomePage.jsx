@@ -7,13 +7,12 @@ import { Categories } from './Categories';
 import { PollBox } from './PollBox';
 const HomePage = () => {
     return (
-        // <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-950 to-blue-900 text-white">
-<div className="min-h-screen  bg-gradient-to-br from-slate-950 via-slate-950 to-slate-950 text-cyan-100">
-            {/* Enhanced Header with Glass Morphism */}
-            {/* <Header_box/> */}
+       <div className="min-h-screen  bg-gradient-to-br from-slate-950 via-slate-950 to-slate-950 text-cyan-100">
+
             <br></br>
             <Categories/>
             <PollBox/>
+            
         </div>
     );
 };
