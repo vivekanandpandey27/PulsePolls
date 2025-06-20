@@ -53,12 +53,10 @@ const editProfile = () => {
         gender : formData.gender,
         bio : formData.bio
       }
-      console.log(newAuth);
+      
 
       dispatch(setAuthUser(newAuth));
-      toast.success("Profile Updated Successfully !");
-      console.log("Profile updated:", res.data);
-      
+      toast.success("Profile Updated Successfully !");      
      } catch (error) {
        console.log("Error sending new profile data:", error);
      }
@@ -68,6 +66,7 @@ const editProfile = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-blue-900 p-4 text-white">
       <div className="max-w-md mx-auto mt-10 bg-gray-800 rounded-xl shadow-2xl overflow-hidden p-6">
+
         {/* Header with back button */}
         <div className="flex items-center mb-6">
           <button 
@@ -92,7 +91,8 @@ const editProfile = () => {
           </div>
         </div>
 
-        {/* Edit Form */}
+        {/* Form for Editing Profile */}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Full Name */}
           <div>

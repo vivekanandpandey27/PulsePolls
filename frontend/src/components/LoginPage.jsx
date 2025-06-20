@@ -58,15 +58,20 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#16213e] flex items-center justify-center px-4">
       <div className="backdrop-blur-md bg-[#ffffff08] border border-[#ffffff15] rounded-[70px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6)] p-12 w-full max-w-md transition-all duration-300 hover:shadow-[0_35px_60px_-15px_rgba(109,40,217,0.3)]">
+        
+        {/* LOGIN BOX HEADER */}
         <div className="text-center mb-10">
+          {/* LOGIN LOGO */}
           <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center mb-4 shadow-lg shadow-[#6366f130]">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
             </svg>
           </div>
+
           <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#818cf8] to-[#c4b5fd] mb-2 p-2">
             LogIn
           </h2>
+
           <p className="text-[#ffffffaa] text-sm">Sign in to your account</p>
         </div>
 
@@ -124,22 +129,12 @@ const LoginPage = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-[#818cf8] focus:ring-[#818cf8] border-[#3b3b6d] rounded bg-[#1e1b4b20]"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-[#a5b4fc]">
-                Remember me
-              </label>
-            </div>
+          {/* NO IMPLEMENTED CURRENTLY */}
+          {/* <div className="flex items-center justify-between">
             <Link to="/forgot-password" className="text-sm text-[#a5b4fc] hover:text-[#c7d2fe] hover:underline transition-colors">
               Forgot password?
             </Link>
-          </div>
+          </div> */}
 
           <button
             type="submit"
@@ -150,7 +145,7 @@ const LoginPage = () => {
 
           <div className="text-center text-sm text-[#a5b4fc]">
             New user?{' '}
-            <Link to="/signup" className="font-medium text-white hover:underline">
+             <Link to="/signup" className="font-medium text-white hover:underline">
               Create account
             </Link>
           </div>

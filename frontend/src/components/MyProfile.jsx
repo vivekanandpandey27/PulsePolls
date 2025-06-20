@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUser } from '../redux/userSlice';
 
+
 const MyProfile = () => {
-  // Your existing logic remains exactly the same
+
   const [showEditPhoto, setShowEditPhoto] = useState(false);
   const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
   const nav = useNavigate();
@@ -15,7 +16,6 @@ const MyProfile = () => {
   const user = useSelector((state) => state.user.authUser);
   const navigate = useNavigate();
 
-  // Your existing functions remain exactly the same
   async function logOut() {
     try {  
       const res = await axios.get(
@@ -63,7 +63,6 @@ const MyProfile = () => {
     </svg>
   );
 
-  // Only UI changes below this point
   return (
     <div className="min-h-screen bg-black text-white p-0 relative">
      
@@ -77,19 +76,17 @@ const MyProfile = () => {
         </button>
       </div>
 
-      {/* Profile Content - Full Page Layout */}
+
+
       <div className="flex flex-col items-center justify-center py-8 px-4">
-        {/* Profile Picture with Hover Effect */}
+
+        {/* Profile Picture */}
         <div className="relative mb-8 group">
           <div className="w-40 h-40 md:w-52 md:h-52 rounded-full bg-gradient-to-br from-purple-600 to-blue-500 p-1">
             <img 
               src={user.profilePhoto} 
               alt="Profile"
               className="w-full h-full rounded-full object-cover border-4 border-gray-900"
-              onError={(e) => {
-                e.target.onerror = null; 
-                
-              }}
             />
           </div>
         </div>

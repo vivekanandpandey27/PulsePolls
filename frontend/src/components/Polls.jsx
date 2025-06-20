@@ -42,9 +42,7 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
   const expiry = data.expiresAt;
   const isExpired = new Date(expiry).getTime() < Date.now()
   const creator = data.creator;
-  //console.log(creator);
-  console.log("creator of post : ",creator);
-  console.log("expiry : ",expiry);
+
 
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -56,7 +54,7 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
     toast.error("Poll is Expired !");
   }
 
-   const BlueTick = () => (
+  const BlueTick = () => (
     <svg className="inline ml-1" width="15" height="15" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
       <path 
@@ -98,9 +96,6 @@ export const Poll = ({ data, refetch ,color,showCreator}) => {
           <div className= {`pt-1 pr-1 text-${isExpired ? "white" : "green-400"}`}>{isExpired ? "Completed" : "Live"}</div>
         </div>
         
-         {/* <div className='w-4 h-4 rounded-full scale-150 font-extrabold text-green-500 text-3xl '>
-           .
-         </div> */}
       </div>
 
       {/* OPTIONS */}

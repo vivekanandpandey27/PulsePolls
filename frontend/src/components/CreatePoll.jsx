@@ -32,7 +32,6 @@ import { toast } from 'react-hot-toast';
 
 
   const [isLoading, setIsLoading] = useState(false);
-
   const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL || 'http://localhost:8080';
 
   const changeHandler = (event) => {
@@ -60,6 +59,7 @@ import { toast } from 'react-hot-toast';
   };
 
   const removeOption = (index) => {
+
     if (formData.options.length <= 1) {
       toast.error("Poll must have at least one option");
       return;
@@ -67,6 +67,7 @@ import { toast } from 'react-hot-toast';
     
     const newOptions = [...formData.options];
     newOptions.splice(index, 1);
+
     setFormData(prev => ({
       ...prev,
       options: newOptions
@@ -80,7 +81,8 @@ import { toast } from 'react-hot-toast';
     
     const filteredOptions = formData.options.filter(option => option.text.trim() !== "");
     
-    if (filteredOptions.length < 2) {
+    if (filteredOptions.length < 2) 
+      {
       toast.error("Poll must have at least 2 options");
       setIsLoading(false);
       return;
@@ -120,6 +122,8 @@ import { toast } from 'react-hot-toast';
   return (
    <div className="min-h-screen bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#16213e] flex items-center justify-center p-4 sm:p-6">
   <div className="backdrop-blur-md bg-[#ffffff08] border border-[#ffffff15] rounded-3xl sm:rounded-[70px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6)] p-6 sm:p-8 md:p-12 w-full max-w-md transition-all duration-300 hover:shadow-[0_35px_60px_-15px_rgba(109,40,217,0.3)]">
+   
+    {/*Header of Create Poll Form*/}
     <div className="text-center mb-6 sm:mb-10">
       <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center mb-3 sm:mb-4 shadow-lg shadow-[#6366f130]">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -211,6 +215,7 @@ import { toast } from 'react-hot-toast';
         <label className="block text-xs sm:text-sm font-medium text-[#e0e0ff]">
           Tags
         </label>
+        
         <div className="flex flex-wrap gap-2">
           {['Technology', 'Politics', 'sports', 'Health', 'News', 'Space', 'Entertainment', 'Education', 'Gaming'].map((tag) => (
             <button
@@ -240,7 +245,6 @@ import { toast } from 'react-hot-toast';
   </label>
   <div className="flex flex-wrap gap-2">
     {expiryOptions.map((option) => {
-      // Store the original option value for comparison
       const optionValue = option.value;
       return (
         <button

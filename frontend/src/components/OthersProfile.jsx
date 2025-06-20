@@ -6,17 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { OthersPolls } from './OthersPolls';
 
 const OthersProfile = () => {
-  // Temporary data with sample posts
 
   
   const navigate = useNavigate();
 
   const location = useLocation();
   const receivedData = location.state.userData;
-
-  useEffect(() => {console.log("data_changed")},[receivedData.userName])
-
-  console.log("Inside Samar fn : ", receivedData);
 
   const [profileData, setProfileData] = useState({
     profilePic: receivedData.profilePhoto,
@@ -27,15 +22,9 @@ const OthersProfile = () => {
     
   });
 
-  //console.log("BOSSS_______>", receivedData);
-  
 
-  
 
-  // Function to format follower count
-  
-
-  // Blue Tick SVG Component
+  // Blue Tick SVG 
   const BlueTick = () => (
     <svg className="inline ml-1" width="18" height="18" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
@@ -49,11 +38,11 @@ const OthersProfile = () => {
     </svg>
   );
 
-  // Golden Tick SVG Component
  
 
   return (
     <div className="bg-black text-white min-h-screen pb-16">
+
       {/* Profile Header */}
       <div className="p-4 pl-5 pt-7">
           <button onClick={() => navigate('/')} className=" text-blue-300 hover:text-white pr-10 scale-150">
@@ -63,18 +52,12 @@ const OthersProfile = () => {
         <div className="flex items-start pl-10">
 
          
-
-
           {/* Larger Profile Picture with ring */}
           <div className="w-32 h-32 rounded-full bg-gray-700 mr-5 overflow-hidden border-4 border-gray-600">
             <img 
               src={profileData.profilePic} 
               alt="Profile" 
               className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null; 
-                e.target.src = "https://via.placeholder.com/150";
-              }}
             />
           </div>
           
@@ -91,18 +74,17 @@ const OthersProfile = () => {
                 <p className="text-gray-400">@{profileData.username}</p>
               </div>
               
-              {/* Better Follow Button */}
               
             </div>
             
-            {/* Bio with better spacing */}
+            {/* Bio*/}
             <p className="text-base mb-4">{profileData.bio}</p>
             
-            {/* Stats with better layout */}
+            {/* No of Polls*/}
             <div className="flex justify-between max-w-xs">
               <div className="text-center">
                 <p className="font-bold text-lg">{profileData.posts}</p>
-                <p className="text-gray-400 text-xs">Posts</p>
+                <p className="text-gray-400 text-xs">Polls</p>
               </div>
              
               

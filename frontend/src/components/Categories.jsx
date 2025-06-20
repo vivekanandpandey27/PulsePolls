@@ -28,42 +28,37 @@ export const Categories = () => {
 
   async function setCategory(NewCategory) 
   {
-        console.log(NewCategory)
         setActiveCategory(NewCategory);
-        console.log("ahhah",NewCategory)
         dispatch(setSelectedCtegory(NewCategory));
   } 
 
   return (
     <div className='p-3'>
-        {/* Categories Section with animated cards */}
-                <motion.section 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="mb-12"
-                >
+        {/* Categories Section*/}
+                <section className="mb-12">
+
                     <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-blue-100 to-purple-300 bg-clip-text text-transparent">
                         Explore Categories
                     </h2>
+
+                    {/* CARDS WITH CATEGORIES */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+
                         {categories.map((category, index) => (
-                            <motion.button
+                            <button
                                 key={index}
-                                whileHover={{ y: -5, scale: 1.03 }}
-                                whileTap={{ scale: 0.98 }}
                                 onClick={() => setCategory(category.name)}
-                                className={`p-4 rounded-xl transition-all flex flex-col items-center 
-             ${activeCategory === category.name 
-                 ? 'bg-blue-700 shadow-lg shadow-white/10 border border-gray-800' 
-                 : 'bg-gray-800 hover:bg-gray-800 border border-transparent'}`}
+                                className={`p-4 rounded-xl transition-all flex flex-col items-center hover:scale-105 ${activeCategory === category.name 
+                                                ? 'bg-blue-700 shadow-lg shadow-white/10 border border-gray-800' 
+                                                : 'bg-gray-800 hover:bg-gray-800 border border-transparent'}`}
                             >
+
                                 <span className="text-2xl mb-2">{category.icon}</span>
                                 <span className="text-sm font-medium">{category.name}</span>
-                            </motion.button>
+                            </button>
                         ))}
                     </div>
-                </motion.section>
+                </section>
     </div>
   )
 }
