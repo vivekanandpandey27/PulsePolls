@@ -12,6 +12,7 @@ export const SearchResultProfile = ({ searchResults }) => {
   return (
         <div className="absolute mt-14 w-72 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50">
               <div className="max-h-60 overflow-y-auto">
+                
                 {searchResults.length > 0 ? 
                 (
                   searchResults.map((people, index) => (
