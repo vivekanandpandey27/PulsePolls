@@ -8,7 +8,7 @@ import NavButton from './NavButton';
 import { useSelector } from 'react-redux';
 import { IoSearch } from "react-icons/io5";
 import axios from 'axios';
-import { SearchResultProfile } from './searchResultProfile';
+import { SearchResultProfile } from './SearchResultProfile';
 
 
 
