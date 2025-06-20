@@ -1,11 +1,11 @@
 # 🗳️ PulsePolls
 
-**PulsePolls** is a full-stack web application that lets users **create, share, and vote** in polls. It is built using the **MERN stack (MongoDB, Express.js, React, Node.js)**.
+**PulsePolls** is a full-stack web application that lets users **create,delete and vote** in polls. It is built using the **MERN stack (MongoDB, Express.js, React, Node.js)**.
 
 ## 🚀 Live Demo
 
-- **Frontend (Vercel):** [https://pulsepolls.vercel.app](https://pulsepolls.vercel.app)
-- **Backend (Render):** [https://pulse-polls-ue2p.vercel.app/](https://pulse-polls-ue2p.vercel.app/)
+- **Frontend (Vercel):** [https://pulse-polls-ue2p.vercel.app/](https://pulse-polls-ue2p.vercel.app/)
+- **Backend (Render):** [https://pulsepolls.onrender.com](https://pulsepolls.onrender.com)
 
 ---
 
@@ -18,7 +18,6 @@
 - 👁️ See polls created by other users on their profile pages
 - ✅ Vote in polls
 - 🔒 Secure backend with JWT & Cookies
-- 🧠 Smart poll suggestions using string similarity
 - 💾 Persistent Redux state across refresh
 - 📱 Fully responsive UI
 
@@ -31,7 +30,9 @@
 - Redux Toolkit & Redux Persist
 - Axios
 - TailwindCSS
+- React Icons
 
+  
 **Backend**
 - Node.js
 - Express.js
@@ -48,17 +49,79 @@
 
 ## 📁 Project Structure
 
+## 📁 Frontend Folder Structure
+
 ```
-PulsePolls/
-├── frontend/           # React + Redux frontend
-│   ├── src/
-│   ├── public/
-│   └── ...
-├── backend/            # Express + Mongo backend
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
-│   └── ...
+frontend/
+├── public/
+│   └── index.html               # HTML template used by Vite
+│
+├── src/
+│   ├── assets/                  # Images, logos, and static files
+│
+│   ├── components/              # All UI and functional React components
+│   │   ├── Categories.jsx
+│   │   ├── Completed_Poll.jsx
+│   │   ├── CreatePoll.jsx
+│   │   ├── editProfile.jsx
+│   │   ├── Header_box.jsx
+│   │   ├── HomePage.jsx
+│   │   ├── LoginPage.jsx
+│   │   ├── MyPolls.jsx
+│   │   ├── MyProfile.jsx
+│   │   ├── NavButton.jsx
+│   │   ├── OthersPolls.jsx
+│   │   ├── OthersProfile.jsx
+│   │   ├── PollBox.jsx
+│   │   ├── Polls.jsx
+│   │   ├── Polls_mine.jsx
+│   │   ├── SearchResultProfile.jsx
+│   │   └── Signup.jsx
+│
+│   ├── redux/                   # Redux slices and store config
+│   │   ├── PollSlice.js
+│   │   ├── userSlice.js
+│   │   └── store.js
+│
+│   ├── App.jsx                  # Main component with routing and layout
+│   ├── App.css                  # Global styles
+│   ├── index.js                 # Legacy entry point (not used by Vite)
+│   ├── main.jsx                 # Vite’s actual entry point
+│   └── .env                     # Frontend environment variables
+│
+├── .gitignore
+├── eslint.config.js
+├── package.json
+└── package-lock.json
+```
+
+
+## 📁 Backend Folder Structure
+
+```
+backend/
+├── config/
+│   └── database.js            # MongoDB connection logic
+│
+├── controllers/
+│   ├── pollController.js      # Logic for poll operations (create, delete, fetch, etc.)
+│   └── userController.js      # Logic for user Login, Signup, LogOut etc.
+│
+├── middleware/
+│   └── isAuthenticated.js     # Middleware to User Authentication
+│
+├── models/
+│   ├── pollModel.js           # Mongoose schema for polls
+│   └── userModel.js           # Mongoose schema for users
+│
+├── routes/
+│   ├── pollRoutes.js          # All routes related to polls
+│   └── userRoutes.js          # All routes related to users (login/signup)
+│
+├── .env                       # Environment variables (not committed to Git)
+├── index.js                   # Entry point for the Express app
+├── package.json               # Backend dependencies and scripts
+└── package-lock.json          # Dependency lock file
 ```
 
 ---
@@ -109,7 +172,7 @@ VITE_REACT_APP_BACKEND_BASE_URL=https://pulsepolls.onrender.com
 Start dev server:
 
 ```bash
-npm start
+npm run dev
 ```
 
 ---
@@ -136,7 +199,6 @@ VITE_REACT_APP_BACKEND_BASE_URL=https://pulsepolls.onrender.com
 
 - **Frontend:** Push changes to GitHub → Vercel auto-deploys
 - **Backend:** Push changes to GitHub → Render auto-deploys
-- Make sure CORS and cookies are set correctly in production
 
 ---
 
