@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import { SearchResultProfile } from './searchResultProfile';
+import { SearchResultProfile } from './SearchResultProfile';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
