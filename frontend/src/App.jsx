@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import{Routes , Route, Router} from 'react-router-dom';
 import LoginPage from './components/LoginPage';
-import Signup from './components/SignUp';
+import Signup from './components/Signup'
 import HomePage from './components/HomePage';
 import Myprofile from './components/MyProfile';
 import Editprofile from  './components/editProfile'
