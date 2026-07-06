@@ -1,4 +1,3 @@
-// store.js
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
@@ -8,13 +7,11 @@ import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist
 import userReducer from "./userSlice";
 import pollReducer from "./PollSlice";
 
-// Persist config
 const persistConfig = {
   key: "root",
   storage,
 };
 
-// Root reducer with persist
 const rootReducer = combineReducers({
   user: userReducer,
   poll: pollReducer,
