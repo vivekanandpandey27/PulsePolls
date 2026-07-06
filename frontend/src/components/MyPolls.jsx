@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Polls_mine } from './Polls_mine';
 import axios from 'axios';
 import { useSelector , useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 
 const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
 
