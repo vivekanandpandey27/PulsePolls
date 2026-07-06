@@ -12,7 +12,6 @@ const HomePage = () => {
             <br></br>
             <Categories/>
             <PollBox/>
-            
         </div>
     );
 };

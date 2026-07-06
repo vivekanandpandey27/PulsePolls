@@ -35,20 +35,8 @@ const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
    const final_filtered_Data = filteredData?.filter(option => {
    return new Date(option.expiresAt).getTime() > Date.now();
  });
- console.log("godna : ",final_filtered_Data);
  
- //   console.log("godna : ",filteredData.map(option => ({
- //   id: option._id,
- //   expiresAt: option.expiresAt
- // })));
- 
- 
-   // console.log(final_filtered_Data);
- 
-   // console.log(currentCategory);
-   // console.log("FD : ",filteredData);
-   //console.log("cur : ", currentCategory);
-  
+
    useEffect(() => {
      fetchPollData(changedata); 
    },[reload]);

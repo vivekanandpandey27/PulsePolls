@@ -16,6 +16,7 @@ exports.register = async (req,res) => {
                 success : false,
             });
         }
+
         //checking if password and confirm password equal ?
         if(password !== confirmPassword)
         {
@@ -24,10 +25,10 @@ exports.register = async (req,res) => {
                 message : "Password and Confirm Password are not equal !!",
             })
         }
+
         //We will check if the userName is already taken or not
         const user = await User.findOne({userName});
-        
-        
+         
         if(user)
         {
             return res.status(400).json({
@@ -35,6 +36,7 @@ exports.register = async (req,res) => {
                 message : "UserName already Taken ",
             })
         }
+
         //Encypting Password 
         const encryptedPassword = await bcrypt.hash(password,10);
 
@@ -125,7 +127,9 @@ exports.login = async (req,res) => {
         .status(200)
         .cookie("token",token,{
             maxAge: 24 * 60 * 60 * 1000,
-            httpOnly: true
+            httpOnly: true,
+            secure: true,         
+            sameSite: "None",     
         })
         .json({
              userName : user.userName,
@@ -168,7 +172,7 @@ exports.logout = async (req,res) => {
 exports.Editprofile = async (req, res) => {
   try {
     const user_id = req.ID;
-    console.log("Received form data:", req.body);
+    // console.log("Received form data:", req.body);
     const {Username} = req.body;
     //console.log(Username);
 
@@ -181,7 +185,7 @@ exports.Editprofile = async (req, res) => {
     //console.log(similar_username._id.toString());
     if(similar_username !== null && user_id !== similar_username?._id.toString())
     {   
-            console.log("unMatched");
+           
             return res.status(400).json({
               success: false,
               message: "UserName Already Taken",
@@ -189,7 +193,7 @@ exports.Editprofile = async (req, res) => {
     }
     else
     {
-        console.log("Can update")
+        
 
         const user = await User.findOneAndUpdate({_id : user_id} , {
             userName : req.body.Username,
@@ -199,7 +203,7 @@ exports.Editprofile = async (req, res) => {
             gender : req.body.gender
         },{new : true});
 
-        console.log(user);
+       
 
         return res.status(200).json({
           success: true,
@@ -220,13 +224,12 @@ exports.getOtherUser = async (req, res) => {
     try {
         const { query } = req.body;
 
-        //console.log('BODY : ',req.body);
 
         if (!query) {
             return res.status(400).json({ error: "Search query is missing" });
         }
 
-        // Get all users and only fetch userName and _id, fullName, profilePhoto (lightweight)
+        
         const allUsers = await User.find({}, 'userName fullName profilePhoto gender bio totalPosts');
 
         // Similarity calculation using string-similarity

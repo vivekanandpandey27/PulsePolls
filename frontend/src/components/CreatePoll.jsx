@@ -253,7 +253,7 @@ import { toast } from 'react-hot-toast';
           onClick={() => {
             setFormData(prev => ({
               ...prev,
-              expiresAt: optionValue // Store the duration directly
+              expiresAt: optionValue 
             }));
           }}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
@@ -279,7 +279,8 @@ import { toast } from 'react-hot-toast';
     </form>
   </div>
 </div>
-  );
+
+);
 };
 
 export default  CreatePoll;
