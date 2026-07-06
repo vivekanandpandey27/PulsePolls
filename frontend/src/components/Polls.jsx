@@ -1,39 +1,22 @@
 import React from 'react';
-import axios from 'axios';
 import { useState } from 'react';
 import { SearchResultProfile } from './SearchResultProfile';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
-const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+import { useVotePoll } from '../hooks/usePollMutations';
 
 export const Poll = ({ data, refetch ,color,showCreator}) => {
 
 
   const navigate = useNavigate();
-
+  const { mutate: votePoll } = useVotePoll();
  
 
-  async function ClickHandler(id, index) {
-    try {
-      const VoteData = {
-        Poll_ID: id,
-        Vote_ID: data.options[index]._id,
-      };
-
-      const res = await axios.post(
-        `${REACT_BASE_URL}/api/v1/polls/vote`,
-        VoteData,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      
-      refetch(state => ((state + 1) % 2));
-    } catch (error) {
-      console.log(error);
-    }
+  function ClickHandler(id, index) {
+    votePoll({
+      Poll_ID: id,
+      Vote_ID: data.options[index]._id,
+    });
   }
 
   const title = data.title;

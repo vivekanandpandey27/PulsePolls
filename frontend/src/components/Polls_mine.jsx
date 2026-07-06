@@ -1,54 +1,22 @@
 import React from 'react';
-import axios from 'axios';
 import { useState } from 'react';
 import { MdDelete } from "react-icons/md";
 import toast from 'react-hot-toast';
-
-const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
-
+import { useVotePoll, useDeletePoll } from '../hooks/usePollMutations';
 
 export const Polls_mine = ({ data, refetch }) => {
-  async function ClickHandler(id, index) {
-    try {
-      const VoteData = {
-        Poll_ID: id,
-        Vote_ID: data.options[index]._id,
-      };
+  const { mutate: votePoll } = useVotePoll();
+  const { mutate: deletePollMutation } = useDeletePoll();
 
-      const res = await axios.post(
-        `${REACT_BASE_URL}/api/v1/polls/vote`,
-        VoteData,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      
-      refetch(state => ((state + 1) % 2));
-    } catch (error) {
-      console.log(error);
-    }
+  function ClickHandler(id, index) {
+    votePoll({
+      Poll_ID: id,
+      Vote_ID: data.options[index]._id,
+    });
   }
 
-  async function deletePoll(poll_id){
-
-    const delete_data = {
-        id : poll_id
-    }
-    try{
-        const res = await axios.post(
-        `${REACT_BASE_URL}/api/v1/polls/delete`,
-        delete_data,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });
-
-        toast.success("Poll Deleted Successfully !")
-
-    } catch {
-        console.log("Error While Deleting Poll");
-    }
+  function deletePoll(poll_id){
+    deletePollMutation({ id: poll_id });
   }
 
   const title = data.title;

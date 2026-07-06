@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAuthUser } from '../redux/userSlice';
-import toast from 'react-hot-toast';
-
-const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
-
+import { useEditProfile } from '../hooks/useUserMutations';
 
 const editProfile = () => {
   const navigate = useNavigate();
@@ -22,6 +18,7 @@ const editProfile = () => {
     bio : User.bio
   });
 
+  const { mutate: editProfileMutation, isPending } = useEditProfile();
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,34 +29,22 @@ const editProfile = () => {
     console.log(formData);
   };
   
-  const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await axios.post(
-      `${REACT_BASE_URL}/api/v1/user/Editprofile`,
-      formData,
-      {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
+    editProfileMutation(formData, {
+      onSuccess: () => {
+        const newAuth =  {
+          userName : formData.Username,
+          fullName : formData.fullName,
+          id : User.id,
+          profilePhoto : formData.imageUrl,
+          gender : formData.gender,
+          bio : formData.bio
+        }
+        dispatch(setAuthUser(newAuth));
       }
-      );
-
-      const newAuth =  {
-        userName : formData.Username,
-        fullName : formData.fullName,
-        id : User.id,
-        profilePhoto : formData.imageUrl,
-        gender : formData.gender,
-        bio : formData.bio
-      }
-      
-
-      dispatch(setAuthUser(newAuth));
-      toast.success("Profile Updated Successfully !");      
-     } catch (error) {
-       console.log("Error sending new profile data:", error);
-     }
+    });
   };
 
 

@@ -1,37 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Polls_mine } from './Polls_mine';
-import axios from 'axios';
-import { useSelector , useDispatch } from 'react-redux';
-
-const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
-
-
-async function fetchPollData(setData) {
-  try {
-    const res = await axios.get(
-      `${REACT_BASE_URL}/api/v1/polls/allpost`,
-      {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      }
-    );
-    setData(res.data); 
-    console.log("Response:", res.data);
-  } catch (error) {
-    console.error("Error fetching poll data:", error);
-  }
-}
+import { useSelector } from 'react-redux';
+import { usePolls } from '../hooks/usePolls';
 
 export const MyPolls = () => {
-  const [data, changedata] = useState([]);
+  const { data = [] } = usePolls();
   const authUser = useSelector((state) => state.user.authUser);
 
   const filtered_data = data.filter((option) => option.creator?._id === authUser?.id);
-  
-
-  useEffect(() => {
-    fetchPollData(changedata); 
-  },[]);
 
   return filtered_data.length === 0 ? (
     <div className='bg-violet-900 h-screen text-white flex justify-center items-start pt-10 text-4xl font-bold shadow-xl shadow-red-800 rounded-lg '>Create Poll first..!</div>

@@ -1,32 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Poll } from './Polls';
-
-const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+import { usePolls } from '../hooks/usePolls';
 
 export const OthersPolls = ({ id }) => {
-  const [allrandompoll, setAllRandomPoll] = useState([]);
-  const [reload, setReload] = useState(0);
-
-  const fetchPollData = async () => {
-    try {
-      const res = await axios.get(`${REACT_BASE_URL}/api/v1/polls/allpost`, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
-      setAllRandomPoll(res.data);
-    } catch (error) {
-      console.error("Error fetching poll data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPollData();
-  }, []);
-
-  useEffect(() => {
-    fetchPollData();
-  }, [reload]);
+  const { data: allrandompoll = [], refetch } = usePolls();
 
   const filteredPoll = allrandompoll.filter((poll) => poll?.creator?._id === id);
   console.log(allrandompoll);
@@ -38,7 +15,7 @@ export const OthersPolls = ({ id }) => {
           showCreator = {false}
           key={option._id || index}
           data={option}
-          refetch={setReload}
+          refetch={refetch}
           color="slate-950"
         />
       ))}

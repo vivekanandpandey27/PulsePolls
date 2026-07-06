@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
-import { setAuthUser } from '../redux/userSlice';
-
+import { useLogin } from '../hooks/useUserMutations';
 
 const LoginPage = () => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { mutate: login, isPending } = useLogin();
 
   const [FormData, SetformData] = useState({ userName: "", password: "" });
   const [PasswordVisibility, setPasswordVisibility] = useState(false);
-
-  const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
 
   const changeHandler = (event) => {
     const { name, type, value, checked } = event.target;
@@ -24,35 +18,18 @@ const LoginPage = () => {
     }));
   };
 
-  
   const changePasswordVisibility = () => {
     setPasswordVisibility(!PasswordVisibility);
   };
 
-  async function onSubmitHandler(event) {
+  function onSubmitHandler(event) {
    event.preventDefault();
-
-    try {
-        const res = await axios.post(
-        `${REACT_BASE_URL}/api/v1/user/login`,
-        FormData,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-
-      console.log("Login Response:", res.data);
-      dispatch(setAuthUser(res.data));
-      navigate('/');
-      //localStorage.setItem("authUser", JSON.stringify(res.data));
-      toast.success(res.data.message);
-      //navigate('/');
-      SetformData({ userName: "", password: "" });
-    } catch (error) {
-      toast.error(error?.response?.data?.message || "Login Failed");
-      console.log(error);
-    }
+   login(FormData, {
+     onSuccess: () => {
+       navigate('/');
+       SetformData({ userName: "", password: "" });
+     }
+   });
   }
 
   return (

@@ -1,51 +1,23 @@
 import { useState } from 'react';
 import { FaUser, FaEdit, FaSignOutAlt, FaArrowLeft } from 'react-icons/fa';
-import toast from 'react-hot-toast';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuthUser } from '../redux/userSlice';
+import { useSelector } from 'react-redux';
+import { useLogout } from '../hooks/useUserMutations';
 
 
 const MyProfile = () => {
 
   const [showEditPhoto, setShowEditPhoto] = useState(false);
-  const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
-  const nav = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.authUser);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.authUser);
+  const { mutate: logout } = useLogout();
 
-  async function logOut() {
-    try {  
-      const res = await axios.get(
-        `${REACT_BASE_URL}/api/v1/user/logout`,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      dispatch(setAuthUser(null));
-      toast.success("LogOut Successfully !");
-      nav("/");
-    } catch(error) {
-      console.log(error);
-    }
-  }
-
-  async function fetchProfile() {
-    try {  
-      const res = await axios.get(
-        `${REACT_BASE_URL}/api/v1/user/profile`,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      dispatch(setAuthUser(null));
-    } catch(error) {
-      console.log(error);
-    }
+  function logOut() {
+    logout(undefined, {
+      onSuccess: () => {
+        navigate("/");
+      }
+    });
   }
 
   const editProfile = () => navigate("/editProfile");

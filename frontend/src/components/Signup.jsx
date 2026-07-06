@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import { useRegister } from '../hooks/useUserMutations';
 
 export const Signup = () => {
 
@@ -10,8 +9,7 @@ export const Signup = () => {
     const [FormData,SetformData] = useState({fullName : "",userName : "", bio : "",password : "",confirmPassword : "",gender:"Male" });
     const [PasswordVisibility, setPasswordVisibility] = useState(false);
     const navigate=useNavigate();
-   
-  const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+    const { mutate: register, isPending } = useRegister();
 
 function changeHandler(event)
     {
@@ -29,7 +27,7 @@ function changeHandler(event)
   };
 
 
-async function onSubmitHandler(event){
+function onSubmitHandler(event){
     
     event.preventDefault();
     const normalizedGender = FormData.gender.toLowerCase();
@@ -38,23 +36,13 @@ async function onSubmitHandler(event){
       ...FormData,
       gender: normalizedGender,
     };
-try{
-      const res= await axios.post(`${REACT_BASE_URL}/api/v1/user/register`,formDataToSend,{
-      headers:{
-        'Content-Type':'application/json'
-      },
-      withCredentials:true
+
+    register(formDataToSend, {
+      onSuccess: () => {
+        navigate('/login');
+        SetformData({fullName : "",userName : "",bio : "",password : "",confirmPassword : "",gender:"" });
+      }
     });
-    if(res.data.success){
-      navigate('/login');
-      toast.success(res.data.message);
-      SetformData({fullName : "",userName : "",bio : "",password : "",confirmPassword : "",gender:"" });
-    }
-    }
-    catch(error){
-    toast.error(error.response.data.message);
-    console.log(error);
-  }
 }
 return (
 <div className="min-h-screen  overflow-hidden bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#16213e] flex items-center justify-center px-4">

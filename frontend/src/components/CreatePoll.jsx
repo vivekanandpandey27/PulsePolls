@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { useCreatePoll } from '../hooks/usePollMutations';
 
  const CreatePoll = () => {
   const navigate = useNavigate();
+  const { mutate: createPoll, isPending: isLoading } = useCreatePoll();
 
   const [formData, setFormData] = useState({ 
     title: "", 
@@ -29,10 +30,6 @@ import { toast } from 'react-hot-toast';
   { label: '12 months', value: 12 * 30 * 24 * 60 * 60 * 1000 } , 
   { label: '4 year', value: 4* 12 * 30 * 24 * 60 * 60 * 1000 } 
 ];
-
-
-  const [isLoading, setIsLoading] = useState(false);
-  const REACT_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL || 'http://localhost:8080';
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -74,49 +71,31 @@ import { toast } from 'react-hot-toast';
     }));
   };
 
-  async function onSubmitHandler(event) {
+  function onSubmitHandler(event) {
     event.preventDefault();
-    setIsLoading(true);
-
     
     const filteredOptions = formData.options.filter(option => option.text.trim() !== "");
     
-    if (filteredOptions.length < 2) 
-      {
+    if (filteredOptions.length < 2) {
       toast.error("Poll must have at least 2 options");
-      setIsLoading(false);
       return;
     }
 
-    try {
-      const res = await axios.post(
-        `${REACT_BASE_URL}/api/v1/polls/post`,
-        {
-    ...formData,
-    expiresAt: formData.expiresAt ? Date.now() + formData.expiresAt : null,
-    options: filteredOptions
-  },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-
-      toast.success("Poll created successfully!");
-      console.log("Poll creation response:", res.data);
-      setFormData({ 
-        title: "", 
-        tags: "", 
-        imageUrl: "",
-        options: [{ text: "", votes: 0 }]
-      });
-      navigate('/');
-    } catch (error) {
-      console.error("Poll creation error:", error);
-      toast.error(error?.response?.data?.message || "Failed to create poll");
-    } finally {
-      setIsLoading(false);
-    }
+    createPoll({
+      ...formData,
+      expiresAt: formData.expiresAt ? Date.now() + formData.expiresAt : null,
+      options: filteredOptions
+    }, {
+      onSuccess: () => {
+        setFormData({ 
+          title: "", 
+          tags: "", 
+          imageUrl: "",
+          options: [{ text: "", votes: 0 }]
+        });
+        navigate('/');
+      }
+    });
   }
 
   return (
